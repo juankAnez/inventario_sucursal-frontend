@@ -1,0 +1,50 @@
+<div class="p-6">
+  <div class="mb-4 flex justify-between items-center">
+    <h2 class="text-3xl font-bold text-gray-800">User Profiles</h2>
+    <p-button label="Add Profile" icon="pi pi-plus" severity="success" />
+  </div>
+  
+  <div *ngIf="loading" class="text-center p-8">
+    <i class="pi pi-spin pi-spinner text-4xl text-blue-500"></i>
+    <p class="mt-2 text-gray-600">Loading profiles...</p>
+  </div>
+
+  <div *ngIf="!loading && profiles.length === 0" class="text-center p-8 bg-gray-50 rounded-lg">
+    <i class="pi pi-inbox text-6xl text-gray-400"></i>
+    <p class="mt-4 text-gray-600">No profiles found</p>
+  </div>
+
+  <p-table 
+    *ngIf="!loading && profiles.length > 0"
+    [value]="profiles" 
+    [paginator]="true" 
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    styleClass="p-datatable-striped">
+    
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID</th>
+        <th>User</th>
+        <th>Branch</th>
+        <th>Phone</th>
+        <th style="width: 150px">Actions</th>
+      </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="body" let-profile>
+      <tr>
+        <td>{{ profile.id }}</td>
+        <td class="font-semibold">{{ profile.user }}</td>
+        <td>{{ profile.branch || 'Not assigned' }}</td>
+        <td>{{ profile.phone || 'N/A' }}</td>
+        <td class="text-center">
+          <p-button icon="pi pi-pencil" [text]="true" [rounded]="true" severity="info" size="small" class="mr-2" pTooltip="Edit" />
+          <p-button icon="pi pi-trash" [text]="true" [rounded]="true" severity="danger" size="small" pTooltip="Delete" />
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

@@ -1,0 +1,145 @@
+<div class="p-6">
+  <div class="mb-4 flex justify-between items-center">
+    <h2 class="text-3xl font-bold text-gray-800">Suppliers</h2>
+    <p-button 
+      label="Add Supplier" 
+      icon="pi pi-plus" 
+      severity="success"
+      (onClick)="openNew()" />
+  </div>
+  
+  <div *ngIf="loading" class="text-center p-8">
+    <i class="pi pi-spin pi-spinner text-4xl text-blue-500"></i>
+    <p class="mt-2 text-gray-600">Loading suppliers...</p>
+  </div>
+
+  <div *ngIf="!loading && suppliers.length === 0" class="text-center p-8 bg-gray-50 rounded-lg">
+    <i class="pi pi-inbox text-6xl text-gray-400"></i>
+    <p class="mt-4 text-gray-600">No suppliers found</p>
+    <p-button 
+      label="Create First Supplier" 
+      icon="pi pi-plus" 
+      severity="success"
+      class="mt-4"
+      (onClick)="openNew()" />
+  </div>
+
+  <p-table 
+    *ngIf="!loading && suppliers.length > 0"
+    [value]="suppliers" 
+    [paginator]="true" 
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    styleClass="p-datatable-striped">
+    
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Contact</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th style="width: 150px">Actions</th>
+      </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="body" let-supplier>
+      <tr>
+        <td>{{ supplier.id }}</td>
+        <td class="font-semibold">{{ supplier.name }}</td>
+        <td>{{ supplier.contact }}</td>
+        <td>{{ supplier.phone }}</td>
+        <td>{{ supplier.email }}</td>
+        <td class="text-center">
+          <p-button 
+            icon="pi pi-pencil" 
+            [text]="true" 
+            [rounded]="true"
+            severity="info" 
+            size="small" 
+            class="mr-2"
+            pTooltip="Edit"
+            (onClick)="editSupplier(supplier)" />
+          <p-button 
+            icon="pi pi-trash" 
+            [text]="true" 
+            [rounded]="true"
+            severity="danger" 
+            size="small"
+            pTooltip="Delete"
+            (onClick)="deleteSupplier(supplier)" />
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog 
+  [(visible)]="displayDialog" 
+  [header]="isEditMode ? 'Edit Supplier' : 'New Supplier'"
+  [modal]="true" 
+  [style]="{ width: '450px' }"
+  [draggable]="false"
+  [resizable]="false">
+  
+  <div class="flex flex-col gap-4">
+    <div>
+      <label for="name" class="block mb-2 font-semibold">Name *</label>
+      <input 
+        pInputText 
+        id="name" 
+        [(ngModel)]="supplier.name" 
+        placeholder="Enter supplier name"
+        class="w-full" />
+    </div>
+    
+    <div>
+      <label for="contact" class="block mb-2 font-semibold">Contact Person</label>
+      <input 
+        pInputText 
+        id="contact" 
+        [(ngModel)]="supplier.contact" 
+        placeholder="Enter contact person"
+        class="w-full" />
+    </div>
+
+    <div>
+      <label for="phone" class="block mb-2 font-semibold">Phone</label>
+      <input 
+        pInputText 
+        id="phone" 
+        [(ngModel)]="supplier.phone" 
+        placeholder="Enter phone number"
+        class="w-full" />
+    </div>
+
+    <div>
+      <label for="email" class="block mb-2 font-semibold">Email *</label>
+      <input 
+        pInputText 
+        id="email" 
+        type="email"
+        [(ngModel)]="supplier.email" 
+        placeholder="Enter email"
+        class="w-full" />
+    </div>
+  </div>
+  
+  <ng-template pTemplate="footer">
+    <p-button 
+      label="Cancel" 
+      icon="pi pi-times" 
+      [text]="true"
+      severity="secondary"
+      (onClick)="hideDialog()" />
+    <p-button 
+      [label]="isEditMode ? 'Update' : 'Save'" 
+      icon="pi pi-check" 
+      (onClick)="saveSupplier()" />
+  </ng-template>
+</p-dialog>
+
+<p-toast />
+<p-confirmDialog />

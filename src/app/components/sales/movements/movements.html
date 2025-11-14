@@ -1,0 +1,62 @@
+<div class="p-6">
+  <div class="mb-4 flex justify-between items-center">
+    <h2 class="text-3xl font-bold text-gray-800">Inventory Movements</h2>
+    <p-button label="Add Movement" icon="pi pi-plus" severity="success" />
+  </div>
+  
+  <div *ngIf="loading" class="text-center p-8">
+    <i class="pi pi-spin pi-spinner text-4xl text-blue-500"></i>
+    <p class="mt-2 text-gray-600">Loading movements...</p>
+  </div>
+
+  <div *ngIf="!loading && movements.length === 0" class="text-center p-8 bg-gray-50 rounded-lg">
+    <i class="pi pi-inbox text-6xl text-gray-400"></i>
+    <p class="mt-4 text-gray-600">No movements found</p>
+  </div>
+
+  <p-table 
+    *ngIf="!loading && movements.length > 0"
+    [value]="movements" 
+    [paginator]="true" 
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [tableStyle]="{ 'min-width': '70rem' }"
+    styleClass="p-datatable-striped">
+    
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ID</th>
+        <th>Type</th>
+        <th>Product</th>
+        <th>Branch</th>
+        <th>Location</th>
+        <th>Batch</th>
+        <th>Quantity</th>
+        <th>User</th>
+        <th>Date</th>
+        <th style="width: 150px">Actions</th>
+      </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="body" let-movement>
+      <tr>
+        <td>{{ movement.id }}</td>
+        <td>
+          <p-tag [value]="movement.movement_type" 
+                [severity]="getMovementSeverity(movement.movement_type)" />         
+        </td>
+        <td class="font-semibold">{{ movement.product }}</td>
+        <td>{{ movement.branch }}</td>
+        <td>{{ movement.location }}</td>
+        <td>{{ movement.batch }}</td>
+        <td class="font-bold">{{ movement.quantity }}</td>
+        <td>{{ movement.user }}</td>
+        <td>{{ movement.movement_date | date:'short' }}</td>
+        <td class="text-center">
+          <p-button icon="pi pi-eye" [text]="true" [rounded]="true" severity="info" size="small" pTooltip="View Details" />
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

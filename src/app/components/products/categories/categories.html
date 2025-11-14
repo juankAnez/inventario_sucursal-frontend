@@ -1,0 +1,129 @@
+<div class="p-6">
+  <!-- Header -->
+  <div class="mb-4 flex justify-between items-center">
+    <h2 class="text-3xl font-bold text-gray-800">Categories</h2>
+    <p-button 
+      label="Add Category" 
+      icon="pi pi-plus" 
+      severity="success"
+      (onClick)="openNew()" />
+  </div>
+  
+  <!-- Loading -->
+  <div *ngIf="loading" class="text-center p-8">
+    <i class="pi pi-spin pi-spinner text-4xl text-blue-500"></i>
+    <p class="mt-2 text-gray-600">Loading categories...</p>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && categories.length === 0" class="text-center p-8 bg-gray-50 rounded-lg">
+    <i class="pi pi-inbox text-6xl text-gray-400"></i>
+    <p class="mt-4 text-gray-600">No categories found</p>
+    <p-button 
+      label="Create First Category" 
+      icon="pi pi-plus" 
+      severity="success"
+      class="mt-4"
+      (onClick)="openNew()" />
+  </div>
+
+  <!-- Table -->
+  <p-table 
+    *ngIf="!loading && categories.length > 0"
+    [value]="categories" 
+    [paginator]="true" 
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    styleClass="p-datatable-striped">
+    
+    <ng-template pTemplate="header">
+      <tr>
+        <th class="text-left">ID</th>
+        <th class="text-left">Name</th>
+        <th class="text-left">Description</th>
+        <th class="text-center" style="width: 150px">Actions</th>
+      </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="body" let-category>
+      <tr>
+        <td>{{ category.id }}</td>
+        <td class="font-semibold">{{ category.name }}</td>
+        <td>{{ category.description || 'No description' }}</td>
+        <td class="text-center">
+          <p-button 
+            icon="pi pi-pencil" 
+            [text]="true" 
+            [rounded]="true"
+            severity="info" 
+            size="small" 
+            class="mr-2"
+            pTooltip="Edit"
+            (onClick)="editCategory(category)" />
+          <p-button 
+            icon="pi pi-trash" 
+            [text]="true" 
+            [rounded]="true"
+            severity="danger" 
+            size="small"
+            pTooltip="Delete"
+            (onClick)="deleteCategory(category)" />
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<!-- Dialog for Create/Edit -->
+<p-dialog 
+  [(visible)]="displayDialog" 
+  [header]="isEditMode ? 'Edit Category' : 'New Category'"
+  [modal]="true" 
+  [style]="{ width: '450px' }"
+  [draggable]="false"
+  [resizable]="false">
+  
+  <div class="flex flex-col gap-4">
+    <div>
+      <label for="name" class="block mb-2 font-semibold">Name *</label>
+      <input 
+        pInputText 
+        id="name" 
+        [(ngModel)]="category.name" 
+        placeholder="Enter category name"
+        class="w-full" />
+    </div>
+    
+    <div>
+      <label for="description" class="block mb-2 font-semibold">Description</label>
+      <textarea 
+        pTextarea 
+        id="description" 
+        [(ngModel)]="category.description" 
+        rows="3"
+        placeholder="Enter category description"
+        class="w-full"></textarea>
+    </div>
+  </div>
+  
+  <ng-template pTemplate="footer">
+    <p-button 
+      label="Cancel" 
+      icon="pi pi-times" 
+      [text]="true"
+      severity="secondary"
+      (onClick)="hideDialog()" />
+    <p-button 
+      [label]="isEditMode ? 'Update' : 'Save'" 
+      icon="pi pi-check" 
+      (onClick)="saveCategory()" />
+  </ng-template>
+</p-dialog>
+
+<!-- Toast for notifications -->
+<p-toast />
+
+<!-- Confirm Dialog -->
+<p-confirmDialog />
