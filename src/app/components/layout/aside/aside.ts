@@ -15,6 +15,11 @@ export class Aside {
   ngOnInit() {
     this.items = [
       {
+        label: 'Dashboard',
+        icon: 'pi pi-fw pi-home',
+        routerLink: '/dashboard'
+      },
+      {
         label: 'Products',
         icon: 'pi pi-fw pi-box',
         items: [

@@ -1,0 +1,52 @@
+/* ==========================================================================
+   🎨 Estilos seguros para la estructura general del layout
+   NO modifican posición, tamaño, ni flujo de elementos.
+   ========================================================================== */
+
+/* Fondo general del main */
+main {
+  background: linear-gradient(to bottom right, #f9fafb, #eef3ff);
+}
+
+/* ----------------------------- HEADER ----------------------------- */
+header {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  z-index: 20;
+}
+
+/* ----------------------------- ASIDE ----------------------------- */
+aside {
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.04);
+  z-index: 10;
+}
+
+/* ----------------------------- CONTENT ----------------------------- */
+
+section {
+  padding: 20px;
+  background: linear-gradient(to bottom right, #f9fafb, #eef5ff);
+  overflow-y: auto;
+}
+
+/* Añade una entrada visual suave al contenido */
+section > * {
+  animation: fadeIn 0.35s ease forwards;
+}
+
+/* ----------------------------- FOOTER ----------------------------- */
+footer {
+  background: #ffffff;
+  border-top: 1px solid #e5e7eb;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.04);
+  z-index: 20;
+}
+
+/* -------- Animación suave -------- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

@@ -1,2 +1,493 @@
-/* You can add global styles to this file, and also import other style files */
+/* Tailwind CSS */
 @import 'tailwindcss';
+/* FIX PrimeNG + Tailwind Flicker */
+.p-datatable-wrapper,
+.p-datatable-table,
+.p-datatable-thead > tr > th,
+.p-datatable-tbody > tr,
+.p-datatable-tbody > tr > td {
+  background-color: white !important;
+}
+
+/* Variables CSS personalizadas */
+:root {
+  --primary-color: #667eea;
+  --primary-dark: #5568d3;
+  --secondary-color: #764ba2;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --danger-color: #ef4444;
+  --info-color: #3b82f6;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --border-color: #e5e7eb;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+}
+
+/* Reset y base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+  border-radius: 10px;
+  transition: background 0.3s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #5568d3 0%, #653a8a 100%);
+}
+
+/* Selection */
+::selection {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+::-moz-selection {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
+
+p {
+  margin-bottom: 1rem;
+  color: var(--text-secondary);
+}
+
+/* Links */
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: var(--primary-dark);
+}
+
+/* Buttons - PrimeNG overrides */
+.p-button {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.p-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.p-button:active {
+  transform: translateY(0);
+}
+
+.p-button-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border: none;
+}
+
+.p-button-danger {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  border: none;
+}
+
+.p-button-info {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  border: none;
+}
+
+/* Forms - PrimeNG overrides */
+.p-inputtext,
+.p-inputtextarea,
+.p-dropdown,
+.p-calendar {
+  font-family: 'Inter', sans-serif;
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.p-inputtext:enabled:hover,
+.p-inputtextarea:enabled:hover,
+.p-dropdown:not(.p-disabled):hover,
+.p-calendar:not(.p-disabled):hover {
+  border-color: var(--primary-color);
+}
+
+.p-inputtext:enabled:focus,
+.p-inputtextarea:enabled:focus,
+.p-dropdown:not(.p-disabled).p-focus,
+.p-calendar:not(.p-disabled).p-focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+}
+
+/* Tables - PrimeNG overrides */
+.p-datatable {
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  font-weight: 600;
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--border-color);
+  padding: 1rem;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  letter-spacing: 0.025em;
+}
+
+.p-datatable .p-datatable-tbody > tr {
+  transition: all 0.2s ease;
+}
+
+.p-datatable .p-datatable-tbody > tr:hover {
+  background-color: #f8f9fa !important;
+  transform: scale(1.001);
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+  padding: 1rem;
+  border-bottom: 1px solid #f1f5f9;
+  color: var(--text-primary);
+}
+
+.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
+  background-color: #fafbfc;
+}
+
+/* Paginator */
+.p-paginator {
+  background: var(--bg-primary);
+  border-top: 1px solid var(--border-color);
+  padding: 1rem;
+}
+
+.p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+/* Dialog - PrimeNG overrides */
+.p-dialog {
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+.p-dialog .p-dialog-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1.5rem;
+  border-bottom: none;
+}
+
+.p-dialog .p-dialog-header .p-dialog-title {
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.p-dialog .p-dialog-header .p-dialog-header-icon {
+  color: white;
+  width: 2rem;
+  height: 2rem;
+}
+
+.p-dialog .p-dialog-header .p-dialog-header-icon:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.p-dialog .p-dialog-content {
+  padding: 2rem;
+  background: var(--bg-primary);
+}
+
+.p-dialog .p-dialog-footer {
+  padding: 1rem 1.5rem;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+}
+
+/* Toast - PrimeNG overrides */
+.p-toast {
+  z-index: 9999;
+}
+
+.p-toast .p-toast-message {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(10px);
+}
+
+.p-toast .p-toast-message.p-toast-message-success {
+  background: rgba(16, 185, 129, 0.95);
+  border: none;
+}
+
+.p-toast .p-toast-message.p-toast-message-error {
+  background: rgba(239, 68, 68, 0.95);
+  border: none;
+}
+
+.p-toast .p-toast-message.p-toast-message-warn {
+  background: rgba(245, 158, 11, 0.95);
+  border: none;
+}
+
+.p-toast .p-toast-message.p-toast-message-info {
+  background: rgba(59, 130, 246, 0.95);
+  border: none;
+}
+
+/* ConfirmDialog - PrimeNG overrides */
+.p-confirm-dialog {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.p-confirm-dialog .p-dialog-header {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+.p-confirm-dialog .p-confirm-dialog-icon {
+  font-size: 3rem;
+  color: #f59e0b;
+}
+
+/* Tags - PrimeNG overrides */
+.p-tag {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.p-tag.p-tag-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.p-tag.p-tag-danger {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+.p-tag.p-tag-warning {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+.p-tag.p-tag-info {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+/* PanelMenu - PrimeNG overrides */
+.p-panelmenu {
+  border: none;
+  background: transparent;
+}
+
+.p-panelmenu .p-panelmenu-header > a {
+  border-radius: var(--radius-md);
+  margin: 0.25rem 0.5rem;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.p-panelmenu .p-panelmenu-header > a:hover {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  transform: translateX(4px);
+}
+
+.p-panelmenu .p-panelmenu-content {
+  border: none;
+  background: transparent;
+}
+
+.p-panelmenu .p-menuitem-link {
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  margin: 0.125rem 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.p-panelmenu .p-menuitem-link:hover {
+  background-color: #f3f4f6;
+  transform: translateX(4px);
+}
+
+/* Tooltip - PrimeNG overrides */
+.p-tooltip {
+  background: rgba(31, 41, 55, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-md);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  box-shadow: var(--shadow-lg);
+}
+
+.p-tooltip .p-tooltip-arrow {
+  border-top-color: rgba(31, 41, 55, 0.95);
+}
+
+/* Loading spinner */
+.pi-spinner {
+  color: var(--primary-color);
+  font-size: 2rem;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease;
+}
+
+.slide-in-left {
+  animation: slideInLeft 0.3s ease;
+}
+
+.slide-in-right {
+  animation: slideInRight 0.3s ease;
+}
+
+/* Utility classes */
+.gradient-bg {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.card {
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .p-datatable {
+    font-size: 0.875rem;
+  }
+  
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.75rem; }
+  h3 { font-size: 1.5rem; }
+}
+
+@media (max-width: 768px) {
+  .p-dialog {
+    width: 95% !important;
+    margin: 1rem;
+  }
+  
+  .p-datatable .p-datatable-thead > tr > th,
+  .p-datatable .p-datatable-tbody > tr > td {
+    padding: 0.75rem;
+  }
+  
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.25rem; }
+}
+
+/* Print styles */
+@media print {
+  .p-button,
+  .p-dialog,
+  .p-toast,
+  .p-paginator {
+    display: none !important;
+  }
+}

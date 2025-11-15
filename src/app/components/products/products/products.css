@@ -1,0 +1,108 @@
+/* === ESTILOS GENERALES DE LA VISTA === */
+:host {
+  display: block;
+}
+
+.p-6 {
+  background: transparent;
+}
+
+/* === TABLA PRIME NG LIMPIA, MODERNA Y CLARA === */
+:host ::ng-deep .p-datatable {
+  border-radius: 14px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Header */
+:host ::ng-deep .p-datatable thead tr th {
+  background: #f8fafc !important;
+  color: #334155 !important;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 14px;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+/* Cuerpo */
+:host ::ng-deep .p-datatable tbody tr {
+  transition: background 0.2s ease-in-out;
+  border-bottom: 1px solid #f1f5f9 !important;
+}
+
+:host ::ng-deep .p-datatable tbody tr:hover {
+  background: #f1f5ff !important; /* Hover suave azul */
+}
+
+:host ::ng-deep .p-datatable tbody td {
+  padding: 14px !important;
+  color: #475569;
+  font-size: 14px;
+}
+
+/* === TAG STATUS (Active / Inactive) === */
+:host ::ng-deep .p-tag-success {
+  background: #dcfce7 !important;
+  color: #166534 !important;
+  padding: 6px 10px;
+  border-radius: 10px;
+}
+
+:host ::ng-deep .p-tag-danger {
+  background: #fee2e2 !important;
+  color: #991b1b !important;
+  padding: 6px 10px;
+  border-radius: 10px;
+}
+
+/* === BOTONES DE ACCIONES === */
+:host ::ng-deep .p-button.p-button-info {
+  background: #dbeafe !important;
+  color: #1d4ed8 !important;
+  border: none !important;
+}
+
+:host ::ng-deep .p-button.p-button-danger {
+  background: #fee2e2 !important;
+  color: #b91c1c !important;
+  border: none !important;
+}
+
+:host ::ng-deep .p-button.p-button-info:hover {
+  background: #bfdbfe !important;
+}
+
+:host ::ng-deep .p-button.p-button-danger:hover {
+  background: #fecaca !important;
+}
+
+/* === PAGINADOR MODERNO === */
+:host ::ng-deep .p-paginator {
+  background: white !important;
+  border-top: 1px solid #e2e8f0;
+  padding: 12px;
+}
+
+:host ::ng-deep .p-paginator .p-paginator-page {
+  background: white;
+  color: #475569 !important;
+  border-radius: 8px;
+  margin: 0 4px;
+  border: 1px solid #e2e8f0;
+}
+
+:host ::ng-deep .p-paginator .p-paginator-page.p-highlight {
+  background: #2563eb !important;
+  color: white !important;
+  border: none !important;
+}
+
+:host ::ng-deep .p-paginator .p-paginator-icon {
+  color: #475569 !important;
+}
+
+:host ::ng-deep .p-paginator .p-paginator-element:hover {
+  background: #f1f5f9 !important;
+  border-radius: 8px;
+}

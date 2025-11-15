@@ -1,24 +1,24 @@
-<main class="min-h-screen flex flex-col border-4 border-red-500">
+<main class="min-h-screen flex flex-col bg-gradient-to-br from-gray-50 to-gray-100">
   <!-- HEADER -->
-  <header class="h-16 bg-white border-2 border-blue-500 flex items-center justify-center font-bold text-blue-600">
+  <header class="h-16 bg-white shadow-md border-b border-gray-200">
     <app-header></app-header>
   </header>
 
-  <!-- CONTENEDOR CENTRAL (ASIDE + CONTENT) -->
+  <!-- CONTENEDOR CENTRAL -->
   <div class="flex flex-1">
     <!-- ASIDE -->
-    <aside class="w-64 bg-white border-2 border-blue-500 flex items-start justify-start font-bold text-blue-400">
+    <aside class="w-64 bg-white shadow-sm border-r border-gray-200">
       <app-aside></app-aside>
     </aside>
 
     <!-- CONTENT -->
-    <section class="flex-1 bg-white border-2 border-blue-500 flex items-center justify-center font-bold text-blue-600">
+    <section class="flex-1 bg-gradient-to-br from-gray-50 to-blue-50 overflow-auto">
       <router-outlet />
     </section>
   </div>
 
   <!-- FOOTER -->
-  <footer class="h-16 bg-white border-2 border-blue-500 flex items-center justify-center font-bold text-blue-600 mt-auto">
+  <footer class="h-12 bg-white shadow-md border-t border-gray-200">
     <app-footer></app-footer>
   </footer>
 </main>

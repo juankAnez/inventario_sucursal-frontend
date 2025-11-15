@@ -1,0 +1,129 @@
+/* ===== Dashboard Layout ===== */
+.dashboard-container {
+  padding: 40px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f7f9ff, #eef2ff);
+  font-family: "Inter", sans-serif;
+}
+
+/* ===== Header ===== */
+.dashboard-header h1 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 8px;
+}
+
+.dashboard-header p {
+  font-size: 18px;
+  color: #6b7280;
+}
+
+/* ===== Quick Actions ===== */
+.quick-actions {
+  margin-top: 40px;
+  margin-bottom: 35px;
+}
+
+.quick-actions h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #1f2937;
+}
+
+.actions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+.action-card {
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+  text-align: center;
+  border: 1px solid #e5e7eb;
+  transition: 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.action-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.action-card span {
+  font-size: 15px;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* ===== Icons ===== */
+.icon {
+  width: 55px;
+  height: 55px;
+  border-radius: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  color: white;
+}
+
+.icon.blue   { background: #3b82f6; }
+.icon.green  { background: #22c55e; }
+.icon.purple { background: #a855f7; }
+.icon.orange { background: #f97316; }
+
+/* ===== Info Panel ===== */
+.info-panel {
+  margin-top: 20px;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.info-box {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  transition: 0.3s ease;
+}
+
+.info-box:hover {
+  transform: translateY(-4px);
+}
+
+.info-box i {
+  font-size: 28px;
+  color: #4f46e5;
+}
+
+.info-box h3 {
+  font-size: 16px;
+  font-weight: bold;
+  color: #1f2937;
+  margin: 0;
+}
+
+.info-box p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.status.ok {
+  color: #10b981;
+  font-weight: 600;
+}

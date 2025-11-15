@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { Dashboard } from './components/dashboard/dashboard';
 import { Categories } from './components/products/categories/categories';
 import { Suppliers } from './components/products/suppliers/suppliers';
 import { Products } from './components/products/products/products';
@@ -11,6 +12,10 @@ import { Locations } from './components/branches/locations/locations';
 import { Profiles } from './components/users/profiles/profiles';
 
 export const routes: Routes = [
+  // Dashboard como página principal
+  { path: '', component: Dashboard },
+  { path: 'dashboard', component: Dashboard },
+  
   // Products
   { path: 'products/categories', component: Categories },
   { path: 'products/suppliers', component: Suppliers },
@@ -27,8 +32,5 @@ export const routes: Routes = [
   { path: 'branches/locations', component: Locations },
   
   // Users
-  { path: 'users/profiles', component: Profiles },
-  
-  // Default
-  { path: '', redirectTo: '/products/categories', pathMatch: 'full' }
+  { path: 'users/profiles', component: Profiles }
 ];

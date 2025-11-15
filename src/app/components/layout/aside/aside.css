@@ -1,0 +1,103 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 1.5rem 1rem;
+  background: white;
+}
+
+/* Estilos del menú */
+:host ::ng-deep .p-panelmenu {
+  border: none;
+  background: transparent;
+}
+
+:host ::ng-deep .p-panelmenu .p-panelmenu-header {
+  margin-bottom: 0.5rem;
+}
+
+:host ::ng-deep .p-panelmenu .p-panelmenu-header > a {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  color: #334155;
+  font-weight: 600;
+  padding: 0.875rem 1rem;
+  transition: all 0.2s ease;
+}
+
+:host ::ng-deep .p-panelmenu .p-panelmenu-header > a:hover {
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  color: white;
+  border-color: transparent;
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+:host ::ng-deep .p-panelmenu .p-panelmenu-header > a .p-menuitem-icon {
+  color: inherit;
+  margin-right: 0.75rem;
+  font-size: 1.125rem;
+}
+
+:host ::ng-deep .p-panelmenu .p-panelmenu-header > a .p-menuitem-text {
+  font-size: 0.9375rem;
+}
+
+/* Contenido del menú */
+:host ::ng-deep .p-panelmenu .p-panelmenu-content {
+  border: none;
+  background: transparent;
+  padding: 0.5rem 0 0.5rem 0.5rem;
+}
+
+:host ::ng-deep .p-panelmenu .p-menuitem {
+  margin-bottom: 0.25rem;
+}
+
+:host ::ng-deep .p-panelmenu .p-menuitem-link {
+  background: transparent;
+  border: none;
+  border-left: 3px solid transparent;
+  border-radius: 0 8px 8px 0;
+  color: #64748b;
+  padding: 0.75rem 1rem;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+:host ::ng-deep .p-panelmenu .p-menuitem-link:hover {
+  background: #f1f5f9;
+  color: #3b82f6;
+  border-left-color: #3b82f6;
+  transform: translateX(2px);
+}
+
+:host ::ng-deep .p-panelmenu .p-menuitem-link .p-menuitem-icon {
+  color: inherit;
+  margin-right: 0.75rem;
+  font-size: 1rem;
+}
+
+/* Scrollbar */
+:host {
+  overflow-y: auto;
+}
+
+:host::-webkit-scrollbar {
+  width: 6px;
+}
+
+:host::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+:host::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+:host::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}

@@ -1,129 +1,145 @@
-<div class="p-6">
-  <!-- Header -->
-  <div class="mb-4 flex justify-between items-center">
-    <h2 class="text-3xl font-bold text-gray-800">Categories</h2>
-    <p-button 
-      label="Add Category" 
-      icon="pi pi-plus" 
-      severity="success"
-      (onClick)="openNew()" />
+<div class="p-8">
+  <!-- Header de la página -->
+  <div class="mb-8">
+    <div class="flex justify-between items-start mb-2">
+      <div>
+        <h2 class="text-3xl font-bold text-gray-900 mb-2">Categories</h2>
+        <p class="text-gray-600">Manage your product categories and organize your inventory</p>
+      </div>
+      <p-button 
+        label="New Category" 
+        icon="pi pi-plus" 
+        [raised]="true"
+        styleClass="bg-gradient-to-r from-blue-500 to-indigo-600 border-none"
+        (onClick)="openNew()" />
+    </div>
   </div>
   
   <!-- Loading -->
-  <div *ngIf="loading" class="text-center p-8">
-    <i class="pi pi-spin pi-spinner text-4xl text-blue-500"></i>
-    <p class="mt-2 text-gray-600">Loading categories...</p>
+  <div *ngIf="loading" class="flex flex-col items-center justify-center p-16 bg-white rounded-2xl shadow-sm">
+    <i class="pi pi-spin pi-spinner text-5xl text-blue-500 mb-4"></i>
+    <p class="text-lg text-gray-600 font-medium">Loading categories...</p>
   </div>
 
   <!-- Empty State -->
-  <div *ngIf="!loading && categories.length === 0" class="text-center p-8 bg-gray-50 rounded-lg">
-    <i class="pi pi-inbox text-6xl text-gray-400"></i>
-    <p class="mt-4 text-gray-600">No categories found</p>
+  <div *ngIf="!loading && categories.length === 0" class="flex flex-col items-center justify-center p-16 bg-white rounded-2xl shadow-sm">
+    <div class="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center mb-6">
+      <i class="pi pi-inbox text-5xl text-blue-300"></i>
+    </div>
+    <h3 class="text-2xl font-bold text-gray-900 mb-2">No categories yet</h3>
+    <p class="text-gray-600 mb-8 text-center max-w-md">Start organizing your inventory by creating your first product category</p>
     <p-button 
       label="Create First Category" 
-      icon="pi pi-plus" 
-      severity="success"
-      class="mt-4"
+      icon="pi pi-plus"
+      [raised]="true"
+      styleClass="bg-gradient-to-r from-blue-500 to-indigo-600 border-none"
       (onClick)="openNew()" />
   </div>
 
   <!-- Table -->
-  <p-table 
-    *ngIf="!loading && categories.length > 0"
-    [value]="categories" 
-    [paginator]="true" 
-    [rows]="10"
-    [showCurrentPageReport]="true"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-    [tableStyle]="{ 'min-width': '50rem' }"
-    styleClass="p-datatable-striped">
-    
-    <ng-template pTemplate="header">
-      <tr>
-        <th class="text-left">ID</th>
-        <th class="text-left">Name</th>
-        <th class="text-left">Description</th>
-        <th class="text-center" style="width: 150px">Actions</th>
-      </tr>
-    </ng-template>
-    
-    <ng-template pTemplate="body" let-category>
-      <tr>
-        <td>{{ category.id }}</td>
-        <td class="font-semibold">{{ category.name }}</td>
-        <td>{{ category.description || 'No description' }}</td>
-        <td class="text-center">
-          <p-button 
-            icon="pi pi-pencil" 
-            [text]="true" 
-            [rounded]="true"
-            severity="info" 
-            size="small" 
-            class="mr-2"
-            pTooltip="Edit"
-            (onClick)="editCategory(category)" />
-          <p-button 
-            icon="pi pi-trash" 
-            [text]="true" 
-            [rounded]="true"
-            severity="danger" 
-            size="small"
-            pTooltip="Delete"
-            (onClick)="deleteCategory(category)" />
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
+  <div *ngIf="!loading && categories.length > 0" class="bg-white rounded-2xl shadow-sm overflow-hidden">
+    <p-table 
+      [value]="categories" 
+      [paginator]="true" 
+      [rows]="10"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} categories"
+      [tableStyle]="{ 'min-width': '50rem' }">
+      
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="bg-gray-50 text-gray-700 font-bold text-sm uppercase tracking-wider py-4 px-6">ID</th>
+          <th class="bg-gray-50 text-gray-700 font-bold text-sm uppercase tracking-wider py-4 px-6">Category Name</th>
+          <th class="bg-gray-50 text-gray-700 font-bold text-sm uppercase tracking-wider py-4 px-6">Description</th>
+          <th class="bg-gray-50 text-gray-700 font-bold text-sm uppercase tracking-wider py-4 px-6 text-center">Actions</th>
+        </tr>
+      </ng-template>
+      
+      <ng-template pTemplate="body" let-category let-rowIndex="rowIndex">
+        <tr class="border-b border-gray-100 hover:bg-blue-50 transition-colors">
+          <td class="py-4 px-6">
+            <div class="w-10 h-10 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-lg flex items-center justify-center">
+              <span class="text-blue-700 font-bold text-sm">{{ category.id }}</span>
+            </div>
+          </td>
+          <td class="py-4 px-6">
+            <span class="text-gray-900 font-semibold text-base">{{ category.name }}</span>
+          </td>
+          <td class="py-4 px-6">
+            <span class="text-gray-600">{{ category.description || 'No description provided' }}</span>
+          </td>
+          <td class="py-4 px-6">
+            <div class="flex items-center justify-center gap-2">
+              <button 
+                class="w-9 h-9 flex items-center justify-center rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-600 transition-all"
+                (click)="editCategory(category)"
+                pTooltip="Edit category"
+                tooltipPosition="top">
+                <i class="pi pi-pencil text-sm"></i>
+              </button>
+              <button 
+                class="w-9 h-9 flex items-center justify-center rounded-lg bg-red-50 hover:bg-red-100 text-red-600 transition-all"
+                (click)="deleteCategory(category)"
+                pTooltip="Delete category"
+                tooltipPosition="top">
+                <i class="pi pi-trash text-sm"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
 </div>
 
-<!-- Dialog for Create/Edit -->
+<!-- Dialog -->
 <p-dialog 
   [(visible)]="displayDialog" 
   [header]="isEditMode ? 'Edit Category' : 'New Category'"
   [modal]="true" 
-  [style]="{ width: '450px' }"
+  [style]="{ width: '550px' }"
   [draggable]="false"
   [resizable]="false">
   
-  <div class="flex flex-col gap-4">
+  <div class="flex flex-col gap-6 p-2">
     <div>
-      <label for="name" class="block mb-2 font-semibold">Name *</label>
+      <label class="block mb-2 text-sm font-bold text-gray-700">
+        Category Name <span class="text-red-500">*</span>
+      </label>
       <input 
         pInputText 
-        id="name" 
         [(ngModel)]="category.name" 
-        placeholder="Enter category name"
-        class="w-full" />
+        placeholder="e.g., Electronics, Furniture, Food"
+        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:outline-none transition-all text-gray-900" />
     </div>
     
     <div>
-      <label for="description" class="block mb-2 font-semibold">Description</label>
+      <label class="block mb-2 text-sm font-bold text-gray-700">Description</label>
       <textarea 
         pTextarea 
-        id="description" 
         [(ngModel)]="category.description" 
-        rows="3"
-        placeholder="Enter category description"
-        class="w-full"></textarea>
+        rows="4"
+        placeholder="Describe this category..."
+        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:outline-none transition-all resize-none text-gray-900"></textarea>
     </div>
   </div>
   
   <ng-template pTemplate="footer">
-    <p-button 
-      label="Cancel" 
-      icon="pi pi-times" 
-      [text]="true"
-      severity="secondary"
-      (onClick)="hideDialog()" />
-    <p-button 
-      [label]="isEditMode ? 'Update' : 'Save'" 
-      icon="pi pi-check" 
-      (onClick)="saveCategory()" />
+    <div class="flex gap-3 justify-end pt-4">
+      <p-button 
+        label="Cancel" 
+        icon="pi pi-times" 
+        [outlined]="true"
+        severity="secondary"
+        (onClick)="hideDialog()" />
+      <p-button 
+        [label]="isEditMode ? 'Update' : 'Create'" 
+        icon="pi pi-check"
+        styleClass="bg-gradient-to-r from-blue-500 to-indigo-600 border-none"
+        (onClick)="saveCategory()" />
+    </div>
   </ng-template>
 </p-dialog>
 
-<!-- Toast for notifications -->
-<p-toast />
-
-<!-- Confirm Dialog -->
+<p-toast position="top-right" />
 <p-confirmDialog />
