@@ -1,23 +1,23 @@
 <main class="min-h-screen flex flex-col bg-gradient-to-br from-gray-50 to-gray-100">
-  <!-- HEADER -->
+  <!-- ENCABEZADO -->
   <header class="h-16 bg-white shadow-md border-b border-gray-200">
     <app-header></app-header>
   </header>
 
   <!-- CONTENEDOR CENTRAL -->
   <div class="flex flex-1">
-    <!-- ASIDE -->
+    <!-- BARRA LATERAL -->
     <aside class="w-64 bg-white shadow-sm border-r border-gray-200">
       <app-aside></app-aside>
     </aside>
 
-    <!-- CONTENT -->
+    <!-- CONTENIDO -->
     <section class="flex-1 bg-gradient-to-br from-gray-50 to-blue-50 overflow-auto">
       <router-outlet />
     </section>
   </div>
 
-  <!-- FOOTER -->
+  <!-- PIE DE PÁGINA -->
   <footer class="h-12 bg-white shadow-md border-t border-gray-200">
     <app-footer></app-footer>
   </footer>

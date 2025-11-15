@@ -1,17 +1,27 @@
 <div class="p-6">
   <div class="mb-4 flex justify-between items-center">
-    <h2 class="text-3xl font-bold text-gray-800">Inventory Movements</h2>
-    <p-button label="Add Movement" icon="pi pi-plus" severity="success" />
+    <h2 class="text-3xl font-bold text-gray-800">Movimientos de Inventario</h2>
+    <p-button 
+      label="Agregar Movimiento" 
+      icon="pi pi-plus" 
+      severity="success"
+      (onClick)="openNew()" />
   </div>
   
   <div *ngIf="loading" class="text-center p-8">
     <i class="pi pi-spin pi-spinner text-4xl text-blue-500"></i>
-    <p class="mt-2 text-gray-600">Loading movements...</p>
+    <p class="mt-2 text-gray-600">Cargando movimientos...</p>
   </div>
 
   <div *ngIf="!loading && movements.length === 0" class="text-center p-8 bg-gray-50 rounded-lg">
     <i class="pi pi-inbox text-6xl text-gray-400"></i>
-    <p class="mt-4 text-gray-600">No movements found</p>
+    <p class="mt-4 text-gray-600">No se encontraron movimientos</p>
+    <p-button 
+      label="Crear Primer Movimiento" 
+      icon="pi pi-plus" 
+      severity="success"
+      class="mt-4"
+      (onClick)="openNew()" />
   </div>
 
   <p-table 
@@ -20,22 +30,22 @@
     [paginator]="true" 
     [rows]="10"
     [showCurrentPageReport]="true"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
     [tableStyle]="{ 'min-width': '70rem' }"
     styleClass="p-datatable-striped">
     
     <ng-template pTemplate="header">
       <tr>
         <th>ID</th>
-        <th>Type</th>
-        <th>Product</th>
-        <th>Branch</th>
-        <th>Location</th>
-        <th>Batch</th>
-        <th>Quantity</th>
-        <th>User</th>
-        <th>Date</th>
-        <th style="width: 150px">Actions</th>
+        <th>Tipo</th>
+        <th>Producto</th>
+        <th>Sucursal</th>
+        <th>Ubicación</th>
+        <th>Lote</th>
+        <th>Cantidad</th>
+        <th>Motivo</th>
+        <th>Fecha</th>
+        <th style="width: 150px">Acciones</th>
       </tr>
     </ng-template>
     
@@ -44,19 +54,141 @@
         <td>{{ movement.id }}</td>
         <td>
           <p-tag [value]="movement.movement_type" 
-                [severity]="getMovementSeverity(movement.movement_type)" />         
+                 [severity]="getMovementSeverity(movement.movement_type)" />
         </td>
-        <td class="font-semibold">{{ movement.product }}</td>
-        <td>{{ movement.branch }}</td>
-        <td>{{ movement.location }}</td>
-        <td>{{ movement.batch }}</td>
+        <td class="font-semibold">{{ getName(products, movement.product) }}</td>
+        <td>{{ getName(branches, movement.branch) }}</td>
+        <td>{{ getName(locations, movement.location) }}</td>
+        <td>{{ getName(batches, movement.batch) }}</td>
         <td class="font-bold">{{ movement.quantity }}</td>
-        <td>{{ movement.user }}</td>
+        <td>{{ movement.reason }}</td>
         <td>{{ movement.movement_date | date:'short' }}</td>
         <td class="text-center">
-          <p-button icon="pi pi-eye" [text]="true" [rounded]="true" severity="info" size="small" pTooltip="View Details" />
+          <p-button 
+            icon="pi pi-pencil" 
+            [text]="true" 
+            [rounded]="true"
+            severity="info" 
+            size="small" 
+            class="mr-2"
+            pTooltip="Editar"
+            (onClick)="editMovement(movement)" />
+          <p-button 
+            icon="pi pi-trash" 
+            [text]="true" 
+            [rounded]="true"
+            severity="danger" 
+            size="small"
+            pTooltip="Eliminar"
+            (onClick)="deleteMovement(movement)" />
         </td>
       </tr>
     </ng-template>
   </p-table>
 </div>
+
+<p-dialog 
+  [(visible)]="displayDialog" 
+  [header]="isEditMode ? 'Editar Movimiento' : 'Nuevo Movimiento'"
+  [modal]="true" 
+  [style]="{ width: '600px' }"
+  [draggable]="false"
+  [resizable]="false">
+  
+  <div class="flex flex-col gap-4">
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label for="movement_type" class="block mb-2 font-semibold text-gray-700">Tipo de Movimiento *</label>
+        <select 
+          id="movement_type"
+          [(ngModel)]="movement.movement_type" 
+          class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none transition-all">
+          <option [value]="null">Seleccione el tipo</option>
+          <option *ngFor="let type of movementTypes" [value]="type.value">{{ type.label }}</option>
+        </select>
+      </div>
+      
+      <div>
+        <label for="quantity" class="block mb-2 font-semibold text-gray-700">Cantidad *</label>
+        <p-inputNumber 
+          [(ngModel)]="movement.quantity"
+          [min]="1"
+          styleClass="w-full" />
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label for="product" class="block mb-2 font-semibold text-gray-700">Producto *</label>
+        <select 
+          id="product"
+          [(ngModel)]="movement.product" 
+          class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none transition-all">
+          <option [value]="null">Seleccione el producto</option>
+          <option *ngFor="let prod of products" [value]="prod.value">{{ prod.label }}</option>
+        </select>
+      </div>
+      
+      <div>
+        <label for="batch" class="block mb-2 font-semibold text-gray-700">Lote *</label>
+        <select 
+          id="batch"
+          [(ngModel)]="movement.batch" 
+          class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none transition-all">
+          <option [value]="null">Seleccione el lote</option>
+          <option *ngFor="let batch of batches" [value]="batch.value">{{ batch.label }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label for="branch" class="block mb-2 font-semibold text-gray-700">Sucursal *</label>
+        <select 
+          id="branch"
+          [(ngModel)]="movement.branch" 
+          class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none transition-all">
+          <option [value]="null">Seleccione la sucursal</option>
+          <option *ngFor="let branch of branches" [value]="branch.value">{{ branch.label }}</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="location" class="block mb-2 font-semibold text-gray-700">Ubicación *</label>
+        <select 
+          id="location"
+          [(ngModel)]="movement.location" 
+          class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none transition-all">
+          <option [value]="null">Seleccione la ubicación</option>
+          <option *ngFor="let loc of locations" [value]="loc.value">{{ loc.label }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div>
+      <label for="reason" class="block mb-2 font-semibold text-gray-700">Motivo *</label>
+      <textarea 
+        id="reason" 
+        [(ngModel)]="movement.reason" 
+        rows="3"
+        placeholder="Describa el motivo de este movimiento"
+        class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none transition-all resize-none"></textarea>
+    </div>
+  </div>
+  
+  <ng-template pTemplate="footer">
+    <p-button 
+      label="Cancelar" 
+      icon="pi pi-times" 
+      [text]="true"
+      severity="secondary"
+      (onClick)="hideDialog()" />
+    <p-button 
+      [label]="isEditMode ? 'Actualizar' : 'Guardar'" 
+      icon="pi pi-check" 
+      (onClick)="saveMovement()" />
+  </ng-template>
+</p-dialog>
+
+<p-toast />
+<p-confirmDialog />

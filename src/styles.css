@@ -491,3 +491,33 @@ a:hover {
     display: none !important;
   }
 }
+
+/* ============================================
+   FIX MENÚ LATERAL – ELIMINAR FONDO NEGRO
+   ============================================ */
+
+/* Item activo (el que aparece negro) */
+.p-panelmenu .p-menuitem-link-active {
+    background: #ffffff !important;       /* blanco */
+    color: #1f2937 !important;            /* texto gris oscuro elegante */
+    border: 2px solid #3b82f6 !important; /* borde azul bonito */
+    border-radius: 12px !important;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.18);
+}
+
+/* Hover del item activo */
+.p-panelmenu .p-menuitem-link-active:hover {
+    background: #eef6ff !important;       /* azul muy claro */
+    color: #2563eb !important;            /* azul vivo */
+}
+
+/* ================================================
+   FIX: QUITAR FONDO NEGRO DE .card DE PRIMEFLEX
+   ================================================ */
+
+app-aside .card {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+}

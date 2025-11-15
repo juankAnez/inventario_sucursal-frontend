@@ -1,17 +1,27 @@
 <div class="p-6">
   <div class="mb-4 flex justify-between items-center">
-    <h2 class="text-3xl font-bold text-gray-800">Products</h2>
-    <p-button label="Add Product" icon="pi pi-plus" severity="success" />
+    <h2 class="text-3xl font-bold text-gray-800">Productos</h2>
+    <p-button 
+      label="Agregar Producto" 
+      icon="pi pi-plus" 
+      severity="success"
+      (onClick)="openNew()" />
   </div>
   
   <div *ngIf="loading" class="text-center p-8">
     <i class="pi pi-spin pi-spinner text-4xl text-blue-500"></i>
-    <p class="mt-2 text-gray-600">Loading products...</p>
+    <p class="mt-2 text-gray-600">Cargando productos...</p>
   </div>
 
   <div *ngIf="!loading && products.length === 0" class="text-center p-8 bg-gray-50 rounded-lg">
     <i class="pi pi-inbox text-6xl text-gray-400"></i>
-    <p class="mt-4 text-gray-600">No products found</p>
+    <p class="mt-4 text-gray-600">No se encontraron productos</p>
+    <p-button 
+      label="Crear Primer Producto" 
+      icon="pi pi-plus" 
+      severity="success"
+      class="mt-4"
+      (onClick)="openNew()" />
   </div>
 
   <p-table 
@@ -20,20 +30,20 @@
     [paginator]="true" 
     [rows]="10"
     [showCurrentPageReport]="true"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
     [tableStyle]="{ 'min-width': '60rem' }"
     styleClass="p-datatable-striped">
     
     <ng-template pTemplate="header">
       <tr>
         <th>ID</th>
-        <th>Code</th>
-        <th>Name</th>
-        <th>Category</th>
-        <th>Purchase Price</th>
-        <th>Sale Price</th>
-        <th>Status</th>
-        <th style="width: 150px">Actions</th>
+        <th>Código</th>
+        <th>Nombre</th>
+        <th>Categoría</th>
+        <th>Precio de Compra</th>
+        <th>Precio de Venta</th>
+        <th>Estado</th>
+        <th style="width: 150px">Acciones</th>
       </tr>
     </ng-template>
     
@@ -42,18 +52,133 @@
         <td>{{ product.id }}</td>
         <td class="font-mono">{{ product.code }}</td>
         <td class="font-semibold">{{ product.name }}</td>
-        <td>{{ product.category }}</td>
+        <td>{{ getCategoryName(product.category) }}</td>
         <td>${{ product.purchase_price }}</td>
         <td>${{ product.sale_price }}</td>
         <td>
-          <p-tag [value]="product.is_active ? 'Active' : 'Inactive'" 
+          <p-tag [value]="product.is_active ? 'Activo' : 'Inactivo'" 
                  [severity]="product.is_active ? 'success' : 'danger'" />
         </td>
         <td class="text-center">
-          <p-button icon="pi pi-pencil" [text]="true" [rounded]="true" severity="info" size="small" class="mr-2" pTooltip="Edit" />
-          <p-button icon="pi pi-trash" [text]="true" [rounded]="true" severity="danger" size="small" pTooltip="Delete" />
+          <p-button 
+            icon="pi pi-pencil" 
+            [text]="true" 
+            [rounded]="true"
+            severity="info" 
+            size="small" 
+            class="mr-2"
+            pTooltip="Editar"
+            (onClick)="editProduct(product)" />
+          <p-button 
+            icon="pi pi-trash" 
+            [text]="true" 
+            [rounded]="true"
+            severity="danger" 
+            size="small"
+            pTooltip="Eliminar"
+            (onClick)="deleteProduct(product)" />
         </td>
       </tr>
     </ng-template>
   </p-table>
 </div>
+
+<p-dialog 
+  [(visible)]="displayDialog" 
+  [header]="isEditMode ? 'Editar Producto' : 'Nuevo Producto'"
+  [modal]="true" 
+  [style]="{ width: '600px' }"
+  [draggable]="false"
+  [resizable]="false">
+  
+  <div class="flex flex-col gap-4">
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label for="code" class="block mb-2 font-semibold text-gray-700">Código del Producto *</label>
+        <input 
+          pInputText 
+          id="code" 
+          [(ngModel)]="product.code" 
+          placeholder="Ej: PROD001"
+          class="w-full" />
+      </div>
+      
+      <div>
+        <label for="category" class="block mb-2 font-semibold text-gray-700">Categoría *</label>
+        <select 
+          id="category"
+          [(ngModel)]="product.category" 
+          class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none transition-all">
+          <option [value]="null">Selecciona una categoría</option>
+          <option *ngFor="let cat of categories" [value]="cat.value">{{ cat.label }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div>
+      <label for="name" class="block mb-2 font-semibold text-gray-700">Nombre del Producto *</label>
+      <input 
+        pInputText 
+        id="name" 
+        [(ngModel)]="product.name" 
+        placeholder="Ingresa el nombre del producto"
+        class="w-full" />
+    </div>
+    
+    <div>
+      <label for="description" class="block mb-2 font-semibold text-gray-700">Descripción</label>
+      <textarea 
+        id="description" 
+        [(ngModel)]="product.description" 
+        rows="3"
+        placeholder="Ingresa la descripción del producto"
+        class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none transition-all resize-none"></textarea>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label for="purchase_price" class="block mb-2 font-semibold text-gray-700">Precio de Compra *</label>
+        <p-inputNumber 
+          [(ngModel)]="product.purchase_price" 
+          mode="currency" 
+          currency="USD"
+          [minFractionDigits]="2"
+          styleClass="w-full" />
+      </div>
+
+      <div>
+        <label for="sale_price" class="block mb-2 font-semibold text-gray-700">Precio de Venta *</label>
+        <p-inputNumber 
+          [(ngModel)]="product.sale_price" 
+          mode="currency" 
+          currency="USD"
+          [minFractionDigits]="2"
+          styleClass="w-full" />
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <p-checkbox 
+        [(ngModel)]="product.is_active" 
+        [binary]="true" 
+        inputId="is_active" />
+      <label for="is_active" class="font-semibold cursor-pointer text-gray-700">Producto Activo</label>
+    </div>
+  </div>
+  
+  <ng-template pTemplate="footer">
+    <p-button 
+      label="Cancelar" 
+      icon="pi pi-times" 
+      [text]="true"
+      severity="secondary"
+      (onClick)="hideDialog()" />
+    <p-button 
+      [label]="isEditMode ? 'Actualizar' : 'Guardar'" 
+      icon="pi pi-check" 
+      (onClick)="saveProduct()" />
+  </ng-template>
+</p-dialog>
+
+<p-toast />
+<p-confirmDialog />

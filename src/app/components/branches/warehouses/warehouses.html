@@ -1,17 +1,17 @@
 <div class="p-6">
   <div class="mb-4 flex justify-between items-center">
-    <h2 class="text-3xl font-bold text-gray-800">Warehouses</h2>
-    <p-button label="Add Warehouse" icon="pi pi-plus" severity="success" />
+    <h2 class="text-3xl font-bold text-gray-800">Bodegas</h2>
+    <p-button label="Agregar Bodega" icon="pi pi-plus" severity="success" />
   </div>
   
   <div *ngIf="loading" class="text-center p-8">
     <i class="pi pi-spin pi-spinner text-4xl text-blue-500"></i>
-    <p class="mt-2 text-gray-600">Loading warehouses...</p>
+    <p class="mt-2 text-gray-600">Cargando bodegas...</p>
   </div>
 
   <div *ngIf="!loading && warehouses.length === 0" class="text-center p-8 bg-gray-50 rounded-lg">
     <i class="pi pi-inbox text-6xl text-gray-400"></i>
-    <p class="mt-4 text-gray-600">No warehouses found</p>
+    <p class="mt-4 text-gray-600">No se encontraron bodegas</p>
   </div>
 
   <p-table 
@@ -20,18 +20,18 @@
     [paginator]="true" 
     [rows]="10"
     [showCurrentPageReport]="true"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
     [tableStyle]="{ 'min-width': '50rem' }"
     styleClass="p-datatable-striped">
     
     <ng-template pTemplate="header">
       <tr>
         <th>ID</th>
-        <th>Branch</th>
-        <th>Code</th>
-        <th>Name</th>
-        <th>Description</th>
-        <th style="width: 150px">Actions</th>
+        <th>Sucursal</th>
+        <th>Código</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th style="width: 150px">Acciones</th>
       </tr>
     </ng-template>
     
@@ -41,10 +41,10 @@
         <td class="font-semibold">{{ warehouse.branch }}</td>
         <td class="font-mono">{{ warehouse.code }}</td>
         <td class="font-semibold">{{ warehouse.name }}</td>
-        <td>{{ warehouse.description || 'No description' }}</td>
+        <td>{{ warehouse.description || 'Sin descripción' }}</td>
         <td class="text-center">
-          <p-button icon="pi pi-pencil" [text]="true" [rounded]="true" severity="info" size="small" class="mr-2" pTooltip="Edit" />
-          <p-button icon="pi pi-trash" [text]="true" [rounded]="true" severity="danger" size="small" pTooltip="Delete" />
+          <p-button icon="pi pi-pencil" [text]="true" [rounded]="true" severity="info" size="small" class="mr-2" pTooltip="Editar" />
+          <p-button icon="pi pi-trash" [text]="true" [rounded]="true" severity="danger" size="small" pTooltip="Eliminar" />
         </td>
       </tr>
     </ng-template>

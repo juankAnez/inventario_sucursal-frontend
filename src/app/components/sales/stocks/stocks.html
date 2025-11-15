@@ -1,17 +1,27 @@
 <div class="p-6">
   <div class="mb-4 flex justify-between items-center">
-    <h2 class="text-3xl font-bold text-gray-800">Branch Stock</h2>
-    <p-button label="Add Stock" icon="pi pi-plus" severity="success" />
+    <h2 class="text-3xl font-bold text-gray-800">Stock por Sucursal</h2>
+    <p-button 
+      label="Agregar Stock" 
+      icon="pi pi-plus" 
+      severity="success"
+      (onClick)="openNew()" />
   </div>
   
   <div *ngIf="loading" class="text-center p-8">
     <i class="pi pi-spin pi-spinner text-4xl text-blue-500"></i>
-    <p class="mt-2 text-gray-600">Loading stocks...</p>
+    <p class="mt-2 text-gray-600">Cargando stock...</p>
   </div>
 
   <div *ngIf="!loading && stocks.length === 0" class="text-center p-8 bg-gray-50 rounded-lg">
     <i class="pi pi-inbox text-6xl text-gray-400"></i>
-    <p class="mt-4 text-gray-600">No stocks found</p>
+    <p class="mt-4 text-gray-600">No se encontró stock</p>
+    <p-button 
+      label="Crear Primer Stock" 
+      icon="pi pi-plus" 
+      severity="success"
+      class="mt-4"
+      (onClick)="openNew()" />
   </div>
 
   <p-table 
@@ -20,42 +30,151 @@
     [paginator]="true" 
     [rows]="10"
     [showCurrentPageReport]="true"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
     [tableStyle]="{ 'min-width': '60rem' }"
     styleClass="p-datatable-striped">
     
     <ng-template pTemplate="header">
       <tr>
         <th>ID</th>
-        <th>Product</th>
-        <th>Branch</th>
-        <th>Location</th>
-        <th>Batch</th>
-        <th>Quantity</th>
-        <th>Min Quantity</th>
-        <th>Status</th>
-        <th style="width: 150px">Actions</th>
+        <th>Producto</th>
+        <th>Sucursal</th>
+        <th>Ubicación</th>
+        <th>Lote</th>
+        <th>Cantidad</th>
+        <th>Min. Cantidad</th>
+        <th>Estado</th>
+        <th style="width: 150px">Acciones</th>
       </tr>
     </ng-template>
     
     <ng-template pTemplate="body" let-stock>
       <tr>
         <td>{{ stock.id }}</td>
-        <td class="font-semibold">{{ stock.product }}</td>
-        <td>{{ stock.branch }}</td>
-        <td>{{ stock.location }}</td>
-        <td>{{ stock.batch }}</td>
+        <td class="font-semibold">{{ getName(products, stock.product) }}</td>
+        <td>{{ getName(branches, stock.branch) }}</td>
+        <td>{{ getName(locations, stock.location) }}</td>
+        <td>{{ getName(batches, stock.batch) }}</td>
         <td class="font-bold">{{ stock.quantity }}</td>
         <td>{{ stock.minimum_quantity }}</td>
         <td>
-          <p-tag [value]="stock.quantity <= stock.minimum_quantity ? 'Low Stock' : 'OK'" 
-                [severity]="getStockSeverity(stock)" />
+          <p-tag 
+            [value]="stock.quantity <= stock.minimum_quantity ? 'Stock Bajo' : 'OK'" 
+            [severity]="getStockSeverity(stock)" />
         </td>
         <td class="text-center">
-          <p-button icon="pi pi-pencil" [text]="true" [rounded]="true" severity="info" size="small" class="mr-2" pTooltip="Edit" />
-          <p-button icon="pi pi-trash" [text]="true" [rounded]="true" severity="danger" size="small" pTooltip="Delete" />
+          <p-button 
+            icon="pi pi-pencil" 
+            [text]="true" 
+            [rounded]="true"
+            severity="info" 
+            size="small" 
+            class="mr-2"
+            pTooltip="Editar"
+            (onClick)="editStock(stock)" />
+          <p-button 
+            icon="pi pi-trash" 
+            [text]="true" 
+            [rounded]="true"
+            severity="danger" 
+            size="small"
+            pTooltip="Eliminar"
+            (onClick)="deleteStock(stock)" />
         </td>
       </tr>
     </ng-template>
   </p-table>
 </div>
+
+<p-dialog 
+  [(visible)]="displayDialog" 
+  [header]="isEditMode ? 'Editar Stock' : 'Nuevo Stock'"
+  [modal]="true" 
+  [style]="{ width: '600px' }"
+  [draggable]="false"
+  [resizable]="false">
+  
+  <div class="flex flex-col gap-4">
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label for="product" class="block mb-2 font-semibold text-gray-700">Producto *</label>
+        <select 
+          id="product"
+          [(ngModel)]="stock.product" 
+          class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none transition-all">
+          <option [value]="null">Seleccione un producto</option>
+          <option *ngFor="let prod of products" [value]="prod.value">{{ prod.label }}</option>
+        </select>
+      </div>
+      
+      <div>
+        <label for="branch" class="block mb-2 font-semibold text-gray-700">Sucursal *</label>
+        <select 
+          id="branch"
+          [(ngModel)]="stock.branch" 
+          class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none transition-all">
+          <option [value]="null">Seleccione una sucursal</option>
+          <option *ngFor="let branch of branches" [value]="branch.value">{{ branch.label }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label for="location" class="block mb-2 font-semibold text-gray-700">Ubicación *</label>
+        <select 
+          id="location"
+          [(ngModel)]="stock.location" 
+          class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none transition-all">
+          <option [value]="null">Seleccione ubicación</option>
+          <option *ngFor="let loc of locations" [value]="loc.value">{{ loc.label }}</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="batch" class="block mb-2 font-semibold text-gray-700">Lote *</label>
+        <select 
+          id="batch"
+          [(ngModel)]="stock.batch" 
+          class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none transition-all">
+          <option [value]="null">Seleccione un lote</option>
+          <option *ngFor="let batch of batches" [value]="batch.value">{{ batch.label }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label for="quantity" class="block mb-2 font-semibold text-gray-700">Cantidad *</label>
+        <p-inputNumber 
+          [(ngModel)]="stock.quantity"
+          [min]="0"
+          styleClass="w-full" />
+      </div>
+
+      <div>
+        <label for="minimum_quantity" class="block mb-2 font-semibold text-gray-700">Cantidad Mínima</label>
+        <p-inputNumber 
+          [(ngModel)]="stock.minimum_quantity"
+          [min]="0"
+          styleClass="w-full" />
+      </div>
+    </div>
+  </div>
+  
+  <ng-template pTemplate="footer">
+    <p-button 
+      label="Cancelar" 
+      icon="pi pi-times" 
+      [text]="true"
+      severity="secondary"
+      (onClick)="hideDialog()" />
+    <p-button 
+      [label]="isEditMode ? 'Actualizar' : 'Guardar'" 
+      icon="pi pi-check" 
+      (onClick)="saveStock()" />
+  </ng-template>
+</p-dialog>
+
+<p-toast />
+<p-confirmDialog />

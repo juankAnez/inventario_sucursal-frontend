@@ -1,52 +1,126 @@
 /* ==========================================================================
-   🎨 Estilos seguros para la estructura general del layout
-   NO modifican posición, tamaño, ni flujo de elementos.
+   🎨 ESTILOS ESPECÍFICOS PARA EL PANEL LATERAL - ALTA ESPECIFICIDAD
    ========================================================================== */
 
-/* Fondo general del main */
-main {
-  background: linear-gradient(to bottom right, #f9fafb, #eef3ff);
+/* CONTENEDOR PRINCIPAL */
+app-aside .p-panelmenu {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 1rem !important;
 }
 
-/* ----------------------------- HEADER ----------------------------- */
-header {
-  background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  z-index: 20;
+/* HEADERS DE MENÚ - TARJETAS CON CONTRASTE */
+app-aside .p-panelmenu .p-panelmenu-header {
+  margin-bottom: 0.5rem !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
 }
 
-/* ----------------------------- ASIDE ----------------------------- */
-aside {
-  background: #ffffff;
-  border-right: 1px solid #e5e7eb;
-  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.04);
-  z-index: 10;
+app-aside .p-panelmenu .p-panelmenu-header > a {
+  background: #ffffff !important;
+  color: #1f2937 !important;
+  border: 2px solid #e5e7eb !important;
+  border-radius: 12px !important;
+  padding: 1rem 1.25rem !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  transition: all 0.3s ease !important;
+  text-decoration: none !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
 }
 
-/* ----------------------------- CONTENT ----------------------------- */
-
-section {
-  padding: 20px;
-  background: linear-gradient(to bottom right, #f9fafb, #eef5ff);
-  overflow-y: auto;
+/* HOVER - EFECTO VISIBLE */
+app-aside .p-panelmenu .p-panelmenu-header > a:hover {
+  background: #f8fafc !important;
+  border-color: #3b82f6 !important;
+  color: #1f2937 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.15) !important;
 }
 
-/* Añade una entrada visual suave al contenido */
-section > * {
-  animation: fadeIn 0.35s ease forwards;
+/* ITEM ACTIVO/EXPANDIDO */
+app-aside .p-panelmenu .p-panelmenu-header.p-highlight > a {
+  background: #3b82f6 !important;
+  color: #ffffff !important;
+  border-color: #3b82f6 !important;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25) !important;
 }
 
-/* ----------------------------- FOOTER ----------------------------- */
-footer {
-  background: #ffffff;
-  border-top: 1px solid #e5e7eb;
-  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.04);
-  z-index: 20;
+/* SUBMENÚS - CONTENIDO */
+app-aside .p-panelmenu .p-panelmenu-content {
+  background: #ffffff !important;
+  border: 2px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  border-top: none !important;
+  margin-top: 0.25rem !important;
+  padding: 0.5rem !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
 }
 
-/* -------- Animación suave -------- */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
+/* ITEMS DEL SUBMENÚ */
+app-aside .p-panelmenu .p-menuitem {
+  margin: 0.125rem 0 !important;
+}
+
+app-aside .p-panelmenu .p-menuitem-link {
+  background: transparent !important;
+  color: #6b7280 !important;
+  border-radius: 6px !important;
+  padding: 0.75rem 1rem !important;
+  border: none !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+}
+
+/* HOVER EN ITEMS */
+app-aside .p-panelmenu .p-menuitem-link:hover {
+  background: #f3f4f6 !important;
+  color: #1f2937 !important;
+  transform: translateX(4px) !important;
+}
+
+/* ÍCONOS CON BUEN CONTRASTE */
+app-aside .p-panelmenu .p-menuitem-link .p-menuitem-icon {
+  color: #3b82f6 !important;
+  font-size: 14px !important;
+}
+
+app-aside .p-panelmenu .p-panelmenu-header > a .p-panelmenu-icon {
+  color: #6b7280 !important;
+}
+
+app-aside .p-panelmenu .p-panelmenu-header.p-highlight > a .p-panelmenu-icon {
+  color: #ffffff !important;
+}
+
+/* COLORES VIVOS PARA ÍCONOS PRINCIPALES */
+app-aside .pi-home {
+  color: #3b82f6 !important;
+}
+
+app-aside .pi-box {
+  color: #10b981 !important;
+}
+
+app-aside .pi-chart-line {
+  color: #f59e0b !important;
+}
+
+app-aside .pi-building {
+  color: #8b5cf6 !important;
+}
+
+app-aside .pi-users {
+  color: #ef4444 !important;
+}
+
+/* ITEM ACTIVO EN SUBMENÚ */
+app-aside .p-panelmenu .p-menuitem-link.p-menuitem-link-active {
+  background: #3b82f6 !important;
+  color: #ffffff !important;
+}
+
+app-aside .p-panelmenu .p-menuitem-link.p-menuitem-link-active .p-menuitem-icon {
+  color: #ffffff !important;
 }

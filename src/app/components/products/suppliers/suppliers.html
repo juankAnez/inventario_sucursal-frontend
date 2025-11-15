@@ -1,8 +1,8 @@
 <div class="p-6">
   <div class="mb-4 flex justify-between items-center">
-    <h2 class="text-3xl font-bold text-gray-800">Suppliers</h2>
+    <h2 class="text-3xl font-bold text-gray-800">Proveedores</h2>
     <p-button 
-      label="Add Supplier" 
+      label="Agregar Proveedor" 
       icon="pi pi-plus" 
       severity="success"
       (onClick)="openNew()" />
@@ -10,14 +10,14 @@
   
   <div *ngIf="loading" class="text-center p-8">
     <i class="pi pi-spin pi-spinner text-4xl text-blue-500"></i>
-    <p class="mt-2 text-gray-600">Loading suppliers...</p>
+    <p class="mt-2 text-gray-600">Cargando proveedores...</p>
   </div>
 
   <div *ngIf="!loading && suppliers.length === 0" class="text-center p-8 bg-gray-50 rounded-lg">
     <i class="pi pi-inbox text-6xl text-gray-400"></i>
-    <p class="mt-4 text-gray-600">No suppliers found</p>
+    <p class="mt-4 text-gray-600">No se encontraron proveedores</p>
     <p-button 
-      label="Create First Supplier" 
+      label="Crear Primer Proveedor" 
       icon="pi pi-plus" 
       severity="success"
       class="mt-4"
@@ -30,18 +30,18 @@
     [paginator]="true" 
     [rows]="10"
     [showCurrentPageReport]="true"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
     [tableStyle]="{ 'min-width': '50rem' }"
     styleClass="p-datatable-striped">
     
     <ng-template pTemplate="header">
       <tr>
         <th>ID</th>
-        <th>Name</th>
-        <th>Contact</th>
-        <th>Phone</th>
-        <th>Email</th>
-        <th style="width: 150px">Actions</th>
+        <th>Nombre</th>
+        <th>Contacto</th>
+        <th>Teléfono</th>
+        <th>Correo</th>
+        <th style="width: 150px">Acciones</th>
       </tr>
     </ng-template>
     
@@ -60,7 +60,7 @@
             severity="info" 
             size="small" 
             class="mr-2"
-            pTooltip="Edit"
+            pTooltip="Editar"
             (onClick)="editSupplier(supplier)" />
           <p-button 
             icon="pi pi-trash" 
@@ -68,7 +68,7 @@
             [rounded]="true"
             severity="danger" 
             size="small"
-            pTooltip="Delete"
+            pTooltip="Eliminar"
             (onClick)="deleteSupplier(supplier)" />
         </td>
       </tr>
@@ -78,7 +78,7 @@
 
 <p-dialog 
   [(visible)]="displayDialog" 
-  [header]="isEditMode ? 'Edit Supplier' : 'New Supplier'"
+  [header]="isEditMode ? 'Editar Proveedor' : 'Nuevo Proveedor'"
   [modal]="true" 
   [style]="{ width: '450px' }"
   [draggable]="false"
@@ -86,56 +86,56 @@
   
   <div class="flex flex-col gap-4">
     <div>
-      <label for="name" class="block mb-2 font-semibold">Name *</label>
+      <label for="name" class="block mb-2 font-semibold">Nombre *</label>
       <input 
         pInputText 
         id="name" 
         [(ngModel)]="supplier.name" 
-        placeholder="Enter supplier name"
+        placeholder="Ingresa el nombre del proveedor"
         class="w-full" />
     </div>
     
     <div>
-      <label for="contact" class="block mb-2 font-semibold">Contact Person</label>
+      <label for="contact" class="block mb-2 font-semibold">Persona de Contacto</label>
       <input 
         pInputText 
         id="contact" 
         [(ngModel)]="supplier.contact" 
-        placeholder="Enter contact person"
+        placeholder="Ingresa la persona de contacto"
         class="w-full" />
     </div>
 
     <div>
-      <label for="phone" class="block mb-2 font-semibold">Phone</label>
+      <label for="phone" class="block mb-2 font-semibold">Teléfono</label>
       <input 
         pInputText 
         id="phone" 
         [(ngModel)]="supplier.phone" 
-        placeholder="Enter phone number"
+        placeholder="Ingresa el número de teléfono"
         class="w-full" />
     </div>
 
     <div>
-      <label for="email" class="block mb-2 font-semibold">Email *</label>
+      <label for="email" class="block mb-2 font-semibold">Correo *</label>
       <input 
         pInputText 
         id="email" 
         type="email"
         [(ngModel)]="supplier.email" 
-        placeholder="Enter email"
+        placeholder="Ingresa el correo electrónico"
         class="w-full" />
     </div>
   </div>
   
   <ng-template pTemplate="footer">
     <p-button 
-      label="Cancel" 
+      label="Cancelar" 
       icon="pi pi-times" 
       [text]="true"
       severity="secondary"
       (onClick)="hideDialog()" />
     <p-button 
-      [label]="isEditMode ? 'Update' : 'Save'" 
+      [label]="isEditMode ? 'Actualizar' : 'Guardar'" 
       icon="pi pi-check" 
       (onClick)="saveSupplier()" />
   </ng-template>

@@ -8,7 +8,7 @@ import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZonelessChangeDetection(),  // ← Debe ser este
+    provideZonelessChangeDetection(),  
     provideRouter(routes),
     provideAnimationsAsync(),
     provideHttpClient(),

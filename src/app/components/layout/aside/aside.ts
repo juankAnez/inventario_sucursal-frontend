@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { PanelMenu } from 'primeng/panelmenu';
 
@@ -7,7 +7,8 @@ import { PanelMenu } from 'primeng/panelmenu';
   standalone: true,
   imports: [PanelMenu],
   templateUrl: './aside.html',
-  styleUrl: './aside.css'
+  styleUrl: './aside.css',
+  encapsulation: ViewEncapsulation.None  // ← ESTA LÍNEA ES CLAVE
 })
 export class Aside {
   items: MenuItem[] | undefined;

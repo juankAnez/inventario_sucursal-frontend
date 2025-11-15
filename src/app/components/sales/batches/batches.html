@@ -1,17 +1,17 @@
 <div class="p-6">
   <div class="mb-4 flex justify-between items-center">
-    <h2 class="text-3xl font-bold text-gray-800">Batches</h2>
-    <p-button label="Add Batch" icon="pi pi-plus" severity="success" />
+    <h2 class="text-3xl font-bold text-gray-800">Lotes</h2>
+    <p-button label="Agregar Lote" icon="pi pi-plus" severity="success" />
   </div>
   
   <div *ngIf="loading" class="text-center p-8">
     <i class="pi pi-spin pi-spinner text-4xl text-blue-500"></i>
-    <p class="mt-2 text-gray-600">Loading batches...</p>
+    <p class="mt-2 text-gray-600">Cargando lotes...</p>
   </div>
 
   <div *ngIf="!loading && batches.length === 0" class="text-center p-8 bg-gray-50 rounded-lg">
     <i class="pi pi-inbox text-6xl text-gray-400"></i>
-    <p class="mt-4 text-gray-600">No batches found</p>
+    <p class="mt-4 text-gray-600">No se encontraron lotes</p>
   </div>
 
   <p-table 
@@ -20,20 +20,20 @@
     [paginator]="true" 
     [rows]="10"
     [showCurrentPageReport]="true"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
     [tableStyle]="{ 'min-width': '60rem' }"
     styleClass="p-datatable-striped">
     
     <ng-template pTemplate="header">
       <tr>
         <th>ID</th>
-        <th>Batch Number</th>
-        <th>Product</th>
-        <th>Manufacturing Date</th>
-        <th>Expiration Date</th>
-        <th>Initial Qty</th>
-        <th>Current Qty</th>
-        <th style="width: 150px">Actions</th>
+        <th>Número de Lote</th>
+        <th>Producto</th>
+        <th>Fecha de Fabricación</th>
+        <th>Fecha de Expiración</th>
+        <th>Cantidad Inicial</th>
+        <th>Cantidad Actual</th>
+        <th style="width: 150px">Acciones</th>
       </tr>
     </ng-template>
     
@@ -47,8 +47,8 @@
         <td>{{ batch.initial_quantity }}</td>
         <td>{{ batch.current_quantity }}</td>
         <td class="text-center">
-          <p-button icon="pi pi-pencil" [text]="true" [rounded]="true" severity="info" size="small" class="mr-2" pTooltip="Edit" />
-          <p-button icon="pi pi-trash" [text]="true" [rounded]="true" severity="danger" size="small" pTooltip="Delete" />
+          <p-button icon="pi pi-pencil" [text]="true" [rounded]="true" severity="info" size="small" class="mr-2" pTooltip="Editar" />
+          <p-button icon="pi pi-trash" [text]="true" [rounded]="true" severity="danger" size="small" pTooltip="Eliminar" />
         </td>
       </tr>
     </ng-template>
