@@ -1,7 +1,11 @@
 <div class="p-6">
   <div class="mb-4 flex justify-between items-center">
     <h2 class="text-3xl font-bold text-gray-800">Bodegas</h2>
-    <p-button label="Agregar Bodega" icon="pi pi-plus" severity="success" />
+    <p-button 
+      label="Agregar Bodega" 
+      icon="pi pi-plus" 
+      severity="success"
+      (onClick)="openNew()" />
   </div>
   
   <div *ngIf="loading" class="text-center p-8">
@@ -12,6 +16,12 @@
   <div *ngIf="!loading && warehouses.length === 0" class="text-center p-8 bg-gray-50 rounded-lg">
     <i class="pi pi-inbox text-6xl text-gray-400"></i>
     <p class="mt-4 text-gray-600">No se encontraron bodegas</p>
+    <p-button 
+      label="Crear Primera Bodega" 
+      icon="pi pi-plus" 
+      severity="success"
+      class="mt-4"
+      (onClick)="openNew()" />
   </div>
 
   <p-table 
@@ -38,15 +48,101 @@
     <ng-template pTemplate="body" let-warehouse>
       <tr>
         <td>{{ warehouse.id }}</td>
-        <td class="font-semibold">{{ warehouse.branch }}</td>
+        <td class="font-semibold">{{ getBranchName(warehouse.branch) }}</td>
         <td class="font-mono">{{ warehouse.code }}</td>
         <td class="font-semibold">{{ warehouse.name }}</td>
         <td>{{ warehouse.description || 'Sin descripción' }}</td>
         <td class="text-center">
-          <p-button icon="pi pi-pencil" [text]="true" [rounded]="true" severity="info" size="small" class="mr-2" pTooltip="Editar" />
-          <p-button icon="pi pi-trash" [text]="true" [rounded]="true" severity="danger" size="small" pTooltip="Eliminar" />
+          <p-button 
+            icon="pi pi-pencil" 
+            [text]="true" 
+            [rounded]="true" 
+            severity="info" 
+            size="small" 
+            class="mr-2" 
+            pTooltip="Editar"
+            (onClick)="editWarehouse(warehouse)" />
+          <p-button 
+            icon="pi pi-trash" 
+            [text]="true" 
+            [rounded]="true" 
+            severity="danger" 
+            size="small" 
+            pTooltip="Eliminar"
+            (onClick)="deleteWarehouse(warehouse)" />
         </td>
       </tr>
     </ng-template>
   </p-table>
 </div>
+
+<!-- Dialog para Crear/Editar -->
+<p-dialog 
+  [(visible)]="displayDialog" 
+  [header]="isEditMode ? 'Editar Bodega' : 'Nueva Bodega'"
+  [modal]="true" 
+  [style]="{ width: '550px' }"
+  [draggable]="false"
+  [resizable]="false">
+  
+  <div class="flex flex-col gap-4">
+    <div>
+      <label for="branch" class="block mb-2 font-semibold text-gray-700">Sucursal *</label>
+      <select 
+        id="branch"
+        [(ngModel)]="warehouse.branch" 
+        class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none transition-all">
+        <option [value]="null">Seleccione una sucursal</option>
+        <option *ngFor="let branch of branches" [value]="branch.value">{{ branch.label }}</option>
+      </select>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label for="code" class="block mb-2 font-semibold text-gray-700">Código *</label>
+        <input 
+          pInputText 
+          id="code" 
+          [(ngModel)]="warehouse.code" 
+          placeholder="Ej: BOD001"
+          class="w-full" />
+      </div>
+      
+      <div>
+        <label for="name" class="block mb-2 font-semibold text-gray-700">Nombre *</label>
+        <input 
+          pInputText 
+          id="name" 
+          [(ngModel)]="warehouse.name" 
+          placeholder="Ej: Bodega Principal"
+          class="w-full" />
+      </div>
+    </div>
+    
+    <div>
+      <label for="description" class="block mb-2 font-semibold text-gray-700">Descripción</label>
+      <textarea 
+        id="description" 
+        [(ngModel)]="warehouse.description" 
+        rows="3"
+        placeholder="Describa la bodega..."
+        class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none transition-all resize-none"></textarea>
+    </div>
+  </div>
+  
+  <ng-template pTemplate="footer">
+    <p-button 
+      label="Cancelar" 
+      icon="pi pi-times" 
+      [text]="true"
+      severity="secondary"
+      (onClick)="hideDialog()" />
+    <p-button 
+      [label]="isEditMode ? 'Actualizar' : 'Guardar'" 
+      icon="pi pi-check" 
+      (onClick)="saveWarehouse()" />
+  </ng-template>
+</p-dialog>
+
+<p-toast />
+<p-confirmDialog />

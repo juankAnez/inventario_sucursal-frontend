@@ -1,7 +1,11 @@
 <div class="p-6">
   <div class="mb-4 flex justify-between items-center">
     <h2 class="text-3xl font-bold text-gray-800">Lotes</h2>
-    <p-button label="Agregar Lote" icon="pi pi-plus" severity="success" />
+    <p-button 
+      label="Agregar Lote" 
+      icon="pi pi-plus" 
+      severity="success"
+      (onClick)="openNew()" />
   </div>
   
   <div *ngIf="loading" class="text-center p-8">
@@ -12,6 +16,12 @@
   <div *ngIf="!loading && batches.length === 0" class="text-center p-8 bg-gray-50 rounded-lg">
     <i class="pi pi-inbox text-6xl text-gray-400"></i>
     <p class="mt-4 text-gray-600">No se encontraron lotes</p>
+    <p-button 
+      label="Crear Primer Lote" 
+      icon="pi pi-plus" 
+      severity="success"
+      class="mt-4"
+      (onClick)="openNew()" />
   </div>
 
   <p-table 
@@ -41,16 +51,123 @@
       <tr>
         <td>{{ batch.id }}</td>
         <td class="font-mono font-semibold">{{ batch.batch_number }}</td>
-        <td>{{ batch.product }}</td>
+        <td>{{ getProductName(batch.product) }}</td>
         <td>{{ batch.manufacturing_date | date:'shortDate' }}</td>
         <td>{{ batch.expiration_date | date:'shortDate' }}</td>
         <td>{{ batch.initial_quantity }}</td>
-        <td>{{ batch.current_quantity }}</td>
+        <td class="font-bold">{{ batch.current_quantity }}</td>
         <td class="text-center">
-          <p-button icon="pi pi-pencil" [text]="true" [rounded]="true" severity="info" size="small" class="mr-2" pTooltip="Editar" />
-          <p-button icon="pi pi-trash" [text]="true" [rounded]="true" severity="danger" size="small" pTooltip="Eliminar" />
+          <p-button 
+            icon="pi pi-pencil" 
+            [text]="true" 
+            [rounded]="true" 
+            severity="info" 
+            size="small" 
+            class="mr-2" 
+            pTooltip="Editar"
+            (onClick)="editBatch(batch)" />
+          <p-button 
+            icon="pi pi-trash" 
+            [text]="true" 
+            [rounded]="true" 
+            severity="danger" 
+            size="small" 
+            pTooltip="Eliminar"
+            (onClick)="deleteBatch(batch)" />
         </td>
       </tr>
     </ng-template>
   </p-table>
 </div>
+
+<!-- Dialog para Crear/Editar -->
+<p-dialog 
+  [(visible)]="displayDialog" 
+  [header]="isEditMode ? 'Editar Lote' : 'Nuevo Lote'"
+  [modal]="true" 
+  [style]="{ width: '600px' }"
+  [draggable]="false"
+  [resizable]="false">
+  
+  <div class="flex flex-col gap-4">
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label for="batch_number" class="block mb-2 font-semibold text-gray-700">Número de Lote *</label>
+        <input 
+          pInputText 
+          id="batch_number" 
+          [(ngModel)]="batch.batch_number" 
+          placeholder="Ej: LT-2025-001"
+          class="w-full" />
+      </div>
+      
+      <div>
+        <label for="product" class="block mb-2 font-semibold text-gray-700">Producto *</label>
+        <select 
+          id="product"
+          [(ngModel)]="batch.product" 
+          class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none transition-all">
+          <option [value]="null">Seleccione un producto</option>
+          <option *ngFor="let product of products" [value]="product.value">{{ product.label }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label for="manufacturing_date" class="block mb-2 font-semibold text-gray-700">Fecha de Fabricación *</label>
+        <input 
+          type="date" 
+          id="manufacturing_date"
+          [(ngModel)]="batch.manufacturing_date"
+          class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none transition-all" />
+      </div>
+      
+      <div>
+        <label for="expiration_date" class="block mb-2 font-semibold text-gray-700">Fecha de Expiración</label>
+        <input 
+          type="date" 
+          id="expiration_date"
+          [(ngModel)]="batch.expiration_date"
+          class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none transition-all" />
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label for="initial_quantity" class="block mb-2 font-semibold text-gray-700">Cantidad Inicial *</label>
+        <p-inputNumber 
+          [(ngModel)]="batch.initial_quantity"
+          [min]="1"
+          [disabled]="isEditMode"
+          placeholder="100"
+          styleClass="w-full" />
+      </div>
+
+      <div *ngIf="isEditMode">
+        <label for="current_quantity" class="block mb-2 font-semibold text-gray-700">Cantidad Actual</label>
+        <p-inputNumber 
+          [(ngModel)]="batch.current_quantity"
+          [min]="0"
+          placeholder="100"
+          styleClass="w-full" />
+      </div>
+    </div>
+  </div>
+  
+  <ng-template pTemplate="footer">
+    <p-button 
+      label="Cancelar" 
+      icon="pi pi-times" 
+      [text]="true"
+      severity="secondary"
+      (onClick)="hideDialog()" />
+    <p-button 
+      [label]="isEditMode ? 'Actualizar' : 'Guardar'" 
+      icon="pi pi-check" 
+      (onClick)="saveBatch()" />
+  </ng-template>
+</p-dialog>
+
+<p-toast />
+<p-confirmDialog />

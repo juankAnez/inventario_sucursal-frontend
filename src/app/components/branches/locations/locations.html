@@ -1,7 +1,11 @@
 <div class="p-6">
   <div class="mb-4 flex justify-between items-center">
     <h2 class="text-3xl font-bold text-gray-800">Ubicaciones</h2>
-    <p-button label="Agregar Ubicación" icon="pi pi-plus" severity="success" />
+    <p-button 
+      label="Agregar Ubicación" 
+      icon="pi pi-plus" 
+      severity="success"
+      (onClick)="openNew()" />
   </div>
   
   <div *ngIf="loading" class="text-center p-8">
@@ -12,6 +16,12 @@
   <div *ngIf="!loading && locations.length === 0" class="text-center p-8 bg-gray-50 rounded-lg">
     <i class="pi pi-inbox text-6xl text-gray-400"></i>
     <p class="mt-4 text-gray-600">No se encontraron ubicaciones</p>
+    <p-button 
+      label="Crear Primera Ubicación" 
+      icon="pi pi-plus" 
+      severity="success"
+      class="mt-4"
+      (onClick)="openNew()" />
   </div>
 
   <p-table 
@@ -37,14 +47,88 @@
     <ng-template pTemplate="body" let-location>
       <tr>
         <td>{{ location.id }}</td>
-        <td class="font-semibold">{{ location.warehouse }}</td>
+        <td class="font-semibold">{{ getWarehouseName(location.warehouse) }}</td>
         <td class="font-mono font-semibold">{{ location.code }}</td>
         <td>{{ location.description || 'Sin descripción' }}</td>
         <td class="text-center">
-          <p-button icon="pi pi-pencil" [text]="true" [rounded]="true" severity="info" size="small" class="mr-2" pTooltip="Editar" />
-          <p-button icon="pi pi-trash" [text]="true" [rounded]="true" severity="danger" size="small" pTooltip="Eliminar" />
+          <p-button 
+            icon="pi pi-pencil" 
+            [text]="true" 
+            [rounded]="true" 
+            severity="info" 
+            size="small" 
+            class="mr-2" 
+            pTooltip="Editar"
+            (onClick)="editLocation(location)" />
+          <p-button 
+            icon="pi pi-trash" 
+            [text]="true" 
+            [rounded]="true" 
+            severity="danger" 
+            size="small" 
+            pTooltip="Eliminar"
+            (onClick)="deleteLocation(location)" />
         </td>
       </tr>
     </ng-template>
   </p-table>
 </div>
+
+<!-- Dialog para Crear/Editar -->
+<p-dialog 
+  [(visible)]="displayDialog" 
+  [header]="isEditMode ? 'Editar Ubicación' : 'Nueva Ubicación'"
+  [modal]="true" 
+  [style]="{ width: '500px' }"
+  [draggable]="false"
+  [resizable]="false">
+  
+  <div class="flex flex-col gap-4">
+    <div>
+      <label for="warehouse" class="block mb-2 font-semibold text-gray-700">Bodega *</label>
+      <select 
+        id="warehouse"
+        [(ngModel)]="location.warehouse" 
+        class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none transition-all">
+        <option [value]="null">Seleccione una bodega</option>
+        <option *ngFor="let warehouse of warehouses" [value]="warehouse.value">{{ warehouse.label }}</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="code" class="block mb-2 font-semibold text-gray-700">Código *</label>
+      <input 
+        pInputText 
+        id="code" 
+        [(ngModel)]="location.code" 
+        placeholder="Ej: EST-A1, PISO-2-B3"
+        class="w-full" />
+    </div>
+    
+    <div>
+      <label for="description" class="block mb-2 font-semibold text-gray-700">Descripción</label>
+      <textarea 
+        id="description" 
+        [(ngModel)]="location.description" 
+        rows="3"
+        placeholder="Describa la ubicación exacta..."
+        class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none transition-all resize-none"></textarea>
+    </div>
+  </div>
+  
+  <ng-template pTemplate="footer">
+    <p-button 
+      label="Cancelar" 
+      icon="pi pi-times" 
+      [text]="true"
+      severity="secondary"
+      (onClick)="hideDialog()" />
+    <p-button 
+      [label]="isEditMode ? 'Actualizar' : 'Guardar'" 
+      icon="pi pi-check" 
+      (onClick)="saveLocation()" />
+  </ng-template>
+</p-dialog>
+
+<p-toast />
+<p-confirmDialog />

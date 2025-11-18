@@ -1,7 +1,11 @@
 <div class="p-6">
   <div class="mb-4 flex justify-between items-center">
     <h2 class="text-3xl font-bold text-gray-800">Sucursales</h2>
-    <p-button label="Agregar Sucursal" icon="pi pi-plus" severity="success" />
+    <p-button 
+      label="Agregar Sucursal" 
+      icon="pi pi-plus" 
+      severity="success"
+      (onClick)="openNew()" />
   </div>
   
   <div *ngIf="loading" class="text-center p-8">
@@ -12,6 +16,12 @@
   <div *ngIf="!loading && branches.length === 0" class="text-center p-8 bg-gray-50 rounded-lg">
     <i class="pi pi-inbox text-6xl text-gray-400"></i>
     <p class="mt-4 text-gray-600">No se encontraron sucursales</p>
+    <p-button 
+      label="Crear Primera Sucursal" 
+      icon="pi pi-plus" 
+      severity="success"
+      class="mt-4"
+      (onClick)="openNew()" />
   </div>
 
   <p-table 
@@ -45,10 +55,105 @@
         <td>{{ branch.phone }}</td>
         <td>{{ branch.manager }}</td>
         <td class="text-center">
-          <p-button icon="pi pi-pencil" [text]="true" [rounded]="true" severity="info" size="small" class="mr-2" pTooltip="Editar" />
-          <p-button icon="pi pi-trash" [text]="true" [rounded]="true" severity="danger" size="small" pTooltip="Eliminar" />
+          <p-button 
+            icon="pi pi-pencil" 
+            [text]="true" 
+            [rounded]="true" 
+            severity="info" 
+            size="small" 
+            class="mr-2" 
+            pTooltip="Editar"
+            (onClick)="editBranch(branch)" />
+          <p-button 
+            icon="pi pi-trash" 
+            [text]="true" 
+            [rounded]="true" 
+            severity="danger" 
+            size="small" 
+            pTooltip="Eliminar"
+            (onClick)="deleteBranch(branch)" />
         </td>
       </tr>
     </ng-template>
   </p-table>
 </div>
+
+<!-- Dialog para Crear/Editar -->
+<p-dialog 
+  [(visible)]="displayDialog" 
+  [header]="isEditMode ? 'Editar Sucursal' : 'Nueva Sucursal'"
+  [modal]="true" 
+  [style]="{ width: '550px' }"
+  [draggable]="false"
+  [resizable]="false">
+  
+  <div class="flex flex-col gap-4">
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label for="code" class="block mb-2 font-semibold text-gray-700">Código *</label>
+        <input 
+          pInputText 
+          id="code" 
+          [(ngModel)]="branch.code" 
+          placeholder="Ej: SUC001"
+          class="w-full" />
+      </div>
+      
+      <div>
+        <label for="phone" class="block mb-2 font-semibold text-gray-700">Teléfono</label>
+        <input 
+          pInputText 
+          id="phone" 
+          [(ngModel)]="branch.phone" 
+          placeholder="Ej: +57 300 1234567"
+          class="w-full" />
+      </div>
+    </div>
+
+    <div>
+      <label for="name" class="block mb-2 font-semibold text-gray-700">Nombre de la Sucursal *</label>
+      <input 
+        pInputText 
+        id="name" 
+        [(ngModel)]="branch.name" 
+        placeholder="Ej: Sucursal Centro"
+        class="w-full" />
+    </div>
+    
+    <div>
+      <label for="address" class="block mb-2 font-semibold text-gray-700">Dirección</label>
+      <textarea 
+        id="address" 
+        [(ngModel)]="branch.address" 
+        rows="2"
+        placeholder="Ingresa la dirección completa"
+        class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none transition-all resize-none"></textarea>
+    </div>
+
+    <div>
+      <label for="manager" class="block mb-2 font-semibold text-gray-700">Encargado</label>
+      <input 
+        pInputText 
+        id="manager" 
+        [(ngModel)]="branch.manager" 
+        placeholder="Nombre del encargado"
+        class="w-full" />
+    </div>
+  </div>
+  
+  <ng-template pTemplate="footer">
+    <p-button 
+      label="Cancelar" 
+      icon="pi pi-times" 
+      [text]="true"
+      severity="secondary"
+      (onClick)="hideDialog()" />
+    <p-button 
+      [label]="isEditMode ? 'Actualizar' : 'Guardar'" 
+      icon="pi pi-check" 
+      (onClick)="saveBranch()" />
+  </ng-template>
+</p-dialog>
+
+<p-toast />
+<p-confirmDialog />
