@@ -21,7 +21,7 @@
 }
 
 h2 {
-  color: #1f2937;
+  color: #eaecef;
   font-weight: 700;
   letter-spacing: -0.025em;
 }
@@ -52,13 +52,13 @@ h2 {
 /* Empty state */
 .bg-gray-50 {
   background-color: #f9fafb;
-  border: 2px dashed #e5e7eb;
+  border: 2px dashed #070707;
   transition: all 0.3s ease;
 }
 
 .bg-gray-50:hover {
   border-color: #d1d5db;
-  background-color: #f3f4f6;
+  background-color: #050505;
 }
 
 .pi-inbox {
@@ -89,7 +89,7 @@ h2 {
 /* Table cells */
 .font-semibold {
   font-weight: 600;
-  color: #374151;
+  color: #dbdbdc;
 }
 
 .font-mono {
@@ -208,4 +208,38 @@ textarea.p-inputtextarea:focus {
   font-size: 1rem;
   color: #374151;
   margin-left: 1rem;
+}
+
+/* ============================================
+   FIX: INPUTS VISIBLES SOLO EN DIÁLOGOS
+   ============================================ */
+
+:host ::ng-deep .p-dialog input[type="text"],
+:host ::ng-deep .p-dialog input[type="email"],
+:host ::ng-deep .p-dialog input[type="tel"],
+:host ::ng-deep .p-dialog input[type="date"],
+:host ::ng-deep .p-dialog input[pInputText],
+:host ::ng-deep .p-dialog textarea,
+:host ::ng-deep .p-dialog select {
+  color: #1f2937 !important;
+  background-color: #ffffff !important;
+}
+
+:host ::ng-deep .p-dialog input::placeholder,
+:host ::ng-deep .p-dialog textarea::placeholder {
+  color: #9ca3af !important;
+}
+
+:host ::ng-deep .p-dialog .p-inputnumber-input {
+  color: #1f2937 !important;
+  background-color: #ffffff !important;
+}
+
+:host ::ng-deep .p-dialog select option {
+  color: #1f2937 !important;
+  background-color: #ffffff !important;
+}
+
+:host ::ng-deep .p-dialog label {
+  color: #374151 !important;
 }

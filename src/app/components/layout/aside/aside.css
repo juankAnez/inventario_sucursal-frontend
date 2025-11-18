@@ -41,7 +41,7 @@
 
 /* Header activo (abierto) */
 .p-panelmenu .p-panelmenu-header.p-highlight > a {
-  background: #6366f1 !important; /* Indigo moderno */
+  background: #6366f1 !important;
   color: white !important;
   border-color: #4f46e5 !important;
   box-shadow: 0 6px 18px rgba(79, 70, 229, 0.35) !important;
@@ -88,7 +88,7 @@
 
 /* Hover interno */
 .p-panelmenu .p-menuitem-link:hover {
-  background: #eef2ff !important; /* Azul pastel */
+  background: #eef2ff !important;
   color: #4338ca !important;
   transform: translateX(6px) !important;
   box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15) !important;
@@ -108,13 +108,25 @@
 }
 
 /* ===========================
-   COLORES DE ICONOS (SUAVES)
+   COLORES DE ICONOS (HEADERS PRINCIPALES)
    =========================== */
-.pi-home { color: #ef4444 !important; }          /* Rojo pastel */
-.pi-box { color: #10b981 !important; }           /* Verde suave */
-.pi-chart-line { color: #f59e0b !important; }    /* Amarillo suave */
-.pi-building { color: #8b5cf6 !important; }      /* Morado pastel */
-.pi-users { color: #3b82f6 !important; }         /* Azul suave */
+.pi-home { color: #ef4444 !important; }
+.pi-box { color: #10b981 !important; }
+.pi-chart-line { color: #f59e0b !important; }
+.pi-building { color: #e641ff !important; }
+.pi-users { color: #3b82f6 !important; }
 .pi-tags { color: #fbbf24 !important; }
-.pi-truck { color: #6b7280 !important; }
+.pi-truck { color: #1040a1 !important; }
 .pi-shopping-bag { color: #6366f1 !important; }
+
+/* ===========================
+   COLORES DE ICONOS (ITEMS DEL SUBMENÚ)
+   =========================== */
+.p-panelmenu .p-menuitem-link .pi-home { color: x#10df51 !important; }
+.p-panelmenu .p-menuitem-link .pi-box { color: #10b981 !important; }
+.p-panelmenu .p-menuitem-link .pi-chart-line { color: #04d800 !important; }
+.p-panelmenu .p-menuitem-link .pi-building { color: #8b5cf6 !important; }
+.p-panelmenu .p-menuitem-link .pi-users { color: #3b82f6 !important; }
+.p-panelmenu .p-menuitem-link .pi-tags { color: #fbbf24 !important; }
+.p-panelmenu .p-menuitem-link .pi-truck { color: #1040a1 !important; }
+.p-panelmenu .p-menuitem-link .pi-shopping-bag { color: #6366f1 !important; }

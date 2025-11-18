@@ -52,13 +52,13 @@ h2 {
 /* Empty state */
 .bg-gray-50 {
   background-color: #f9fafb;
-  border: 2px dashed #e5e7eb;
+  border: 2px dashed #050505;
   transition: all 0.3s ease;
 }
 
 .bg-gray-50:hover {
   border-color: #d1d5db;
-  background-color: #f3f4f6;
+  background-color: #080808;
 }
 
 .pi-inbox {
@@ -89,7 +89,7 @@ h2 {
 /* Table cells */
 .font-semibold {
   font-weight: 600;
-  color: #374151;
+  color: #f7f8f9;
 }
 
 .font-mono {
@@ -208,4 +208,76 @@ textarea.p-inputtextarea:focus {
   font-size: 1rem;
   color: #374151;
   margin-left: 1rem;
+}
+
+/* ============================================
+   FIX: INPUTS Y LABELS VISIBLES EN DIÁLOGOS
+   ============================================ */
+
+/* Todos los inputs dentro de diálogos */
+:host ::ng-deep .p-dialog input[type="text"],
+:host ::ng-deep .p-dialog input[type="email"],
+:host ::ng-deep .p-dialog input[type="tel"],
+:host ::ng-deep .p-dialog input[type="date"],
+:host ::ng-deep .p-dialog input[type="number"],
+:host ::ng-deep .p-dialog input[pInputText],
+:host ::ng-deep .p-dialog textarea,
+:host ::ng-deep .p-dialog select {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+  border: 2px solid #d1d5db !important;
+}
+
+/* Placeholders visibles */
+:host ::ng-deep .p-dialog input::placeholder,
+:host ::ng-deep .p-dialog textarea::placeholder {
+  color: #6b7280 !important;
+  opacity: 1 !important;
+}
+
+/* PrimeNG InputNumber */
+:host ::ng-deep .p-dialog .p-inputnumber input,
+:host ::ng-deep .p-dialog .p-inputnumber-input {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+}
+
+/* Selects y sus opciones */
+:host ::ng-deep .p-dialog select {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+}
+
+:host ::ng-deep .p-dialog select option {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+}
+
+/* Labels siempre visibles */
+:host ::ng-deep .p-dialog label {
+  color: #1f2937 !important;
+  font-weight: 600 !important;
+}
+
+/* Inputs en focus */
+:host ::ng-deep .p-dialog input:focus,
+:host ::ng-deep .p-dialog textarea:focus,
+:host ::ng-deep .p-dialog select:focus {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+  border-color: #3b82f6 !important;
+}
+
+/* Inputs deshabilitados */
+:host ::ng-deep .p-dialog input:disabled,
+:host ::ng-deep .p-dialog textarea:disabled,
+:host ::ng-deep .p-dialog select:disabled {
+  color: #6b7280 !important;
+  background-color: #f3f4f6 !important;
+  opacity: 0.7 !important;
+}
+
+/* PrimeNG Checkbox labels */
+:host ::ng-deep .p-dialog .p-checkbox-label {
+  color: #1f2937 !important;
 }

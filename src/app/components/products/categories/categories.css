@@ -141,6 +141,7 @@ textarea[pTextarea]:focus {
   border-color: #3b82f6 !important;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
 }
+
 /* FIX del parpadeo negro en PrimeNG + Tailwind */
 .p-datatable-wrapper,
 .p-datatable-table,
@@ -156,4 +157,52 @@ textarea[pTextarea]:focus {
 /* Elimina resalto negro por accesibilidad que PrimeNG activa accidentalmente */
 * {
   -webkit-tap-highlight-color: transparent !important;
+}
+
+/* ============================================
+   FIX: INPUTS VISIBLES SOLO EN DIÁLOGOS
+   ============================================ */
+
+/* Solo inputs dentro de diálogos */
+:host ::ng-deep .p-dialog input[type="text"],
+:host ::ng-deep .p-dialog input[type="email"],
+:host ::ng-deep .p-dialog input[type="tel"],
+:host ::ng-deep .p-dialog input[type="date"],
+:host ::ng-deep .p-dialog input[pInputText],
+:host ::ng-deep .p-dialog textarea,
+:host ::ng-deep .p-dialog select {
+  color: #1f2937 !important;
+  background-color: #ffffff !important;
+}
+
+/* Placeholders en diálogos */
+:host ::ng-deep .p-dialog input::placeholder,
+:host ::ng-deep .p-dialog textarea::placeholder {
+  color: #9ca3af !important;
+}
+
+/* PrimeNG InputNumber en diálogos */
+:host ::ng-deep .p-dialog .p-inputnumber-input {
+  color: #1f2937 !important;
+  background-color: #ffffff !important;
+}
+
+/* Opciones de select en diálogos */
+:host ::ng-deep .p-dialog select option {
+  color: #1f2937 !important;
+  background-color: #ffffff !important;
+}
+
+/* Labels en diálogos */
+:host ::ng-deep .p-dialog label {
+  color: #374151 !important;
+}
+
+/* Inputs deshabilitados en diálogos */
+:host ::ng-deep .p-dialog input:disabled,
+:host ::ng-deep .p-dialog textarea:disabled,
+:host ::ng-deep .p-dialog select:disabled {
+  color: #6b7280 !important;
+  background-color: #f3f4f6 !important;
+  opacity: 0.6 !important;
 }

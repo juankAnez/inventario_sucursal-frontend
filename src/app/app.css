@@ -87,28 +87,28 @@ app-aside .p-panelmenu .p-menuitem-link .p-menuitem-icon {
 }
 
 app-aside .p-panelmenu .p-panelmenu-header > a .p-panelmenu-icon {
-  color: #6b7280 !important;
+  color: #145bea !important;
 }
 
 app-aside .p-panelmenu .p-panelmenu-header.p-highlight > a .p-panelmenu-icon {
-  color: #ffffff !important;
+  color: #b30707 !important;
 }
 
 /* COLORES VIVOS PARA ÍCONOS PRINCIPALES */
 app-aside .pi-home {
-  color: #3b82f6 !important;
+  color: #ff0011 !important;
 }
 
 app-aside .pi-box {
-  color: #10b981 !important;
+  color: #0d3dff !important;
 }
 
 app-aside .pi-chart-line {
-  color: #f59e0b !important;
+  color: #04f585 !important;
 }
 
 app-aside .pi-building {
-  color: #8b5cf6 !important;
+  color: #140142 !important;
 }
 
 app-aside .pi-users {
