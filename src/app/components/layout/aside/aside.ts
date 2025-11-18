@@ -16,37 +16,37 @@ export class Aside {
   ngOnInit() {
     this.items = [
       {
-        label: 'Dashboard',
+        label: 'Panel',
         icon: 'pi pi-fw pi-home',
         routerLink: '/dashboard'
       },
       {
-        label: 'Products',
+        label: 'Productos',
         icon: 'pi pi-fw pi-box',
         items: [
           {
-            label: 'Categories',
+            label: 'Categorias',
             icon: 'pi pi-fw pi-tags',
             routerLink: '/products/categories'
           },
           {
-            label: 'Suppliers',
+            label: 'Provedores',
             icon: 'pi pi-fw pi-truck',
             routerLink: '/products/suppliers'
           },
           {
-            label: 'Products',
+            label: 'Productos',
             icon: 'pi pi-fw pi-shopping-bag',
             routerLink: '/products/products'
           }
         ]
       },
       {
-        label: 'Sales',
+        label: 'Ventas',
         icon: 'pi pi-fw pi-chart-line',
         items: [
           {
-            label: 'Batches',
+            label: 'Lotes',
             icon: 'pi pi-fw pi-qrcode',
             routerLink: '/sales/batches'
           },
@@ -56,35 +56,35 @@ export class Aside {
             routerLink: '/sales/stocks'
           },
           {
-            label: 'Movements',
+            label: 'Movimientos',
             icon: 'pi pi-fw pi-arrows-h',
             routerLink: '/sales/movements'
           }
         ]
       },
       {
-        label: 'Branches',
+        label: 'Sucursales',
         icon: 'pi pi-fw pi-building',
         items: [
           {
-            label: 'Branches',
+            label: 'Sucursal',
             icon: 'pi pi-fw pi-home',
             routerLink: '/branches/branches'
           },
           {
-            label: 'Warehouses',
+            label: 'Almacenes',
             icon: 'pi pi-fw pi-warehouse',
             routerLink: '/branches/warehouses'
           },
           {
-            label: 'Locations',
+            label: 'Ubicaciones',
             icon: 'pi pi-fw pi-map-marker',
             routerLink: '/branches/locations'
           }
         ]
       },
       {
-        label: 'Users',
+        label: 'Usuarios',
         icon: 'pi pi-fw pi-users',
         routerLink: '/users/profiles'
       }
